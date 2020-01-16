@@ -64,28 +64,6 @@ func (s *Server) setRouters() {
 
 	// PATCH
 	s.Router.Patch("/images/{imageIdentifier}", s.handleRequest(handler.Update))
-
-	// s.handleRequest(handler.UpdateFestival)
-	//s.Router.Get("/festivals", s.handleRequest(handler.GetFestivals)) // all or ?ids=1;2;3
-	//s.Router.Get("/artists", s.handleRequest(handler.GetArtists))
-
-	/*
-		// POST requests
-		s.Router.Post("/festivals", s.handleRequest(handler.CreateFestival))
-		s.Router.Post("/artists", s.handleRequest(handler.CreateArtist))
-
-		s.Router.Post("/festivals/{objectID}/image/{resourceID}", s.handleRequest(handler.SetImageForFestival))
-		s.Router.Post("/festivals/{objectID}/links/{resourceID}", s.handleRequest(handler.SetLinkForFestival))
-
-		// PATCH requests
-		s.Router.Patch("/festivals/{objectID}", s.handleRequest(handler.UpdateFestival))
-		s.Router.Patch("/artists/{objectID}", s.handleRequest(handler.UpdateArtist))
-
-
-		// DELETE requests
-		s.Router.Delete("/festivals/{objectID}", s.handleRequest(handler.DeleteFestival))
-		s.Router.Delete("/artists/{objectID}", s.handleRequest(handler.DeleteArtist))
-	*/
 }
 
 // Run the server on it's router

@@ -1,8 +1,8 @@
-# Eventus Image Server
+# Eventus File Server
 
-[![License](https://img.shields.io/github/license/phisto/eventusimageserver.svg)](https://github.com/Phisto/eventusimageserver)
+[![License](https://img.shields.io/github/license/phisto/eventusfileserver.svg)](https://github.com/Phisto/eventusfileserver)
 
-Eventus image server, a live and lightweight go server app.
+Eventus file server, a live and lightweight go server app.
 
 ## Overview
 
@@ -33,10 +33,12 @@ go build
 │   │
 │   ├── handler                 // API handlers
 │   │   ├── common.go           // Common response functions
-│   │   └── festival.go         // APIs for the Festival model
+│   │   ├── image.go            // APIs for handling images
+│   │   └── status.go           // APIs getting server status information
 │   │
-│   └── model
-│       └── model.go            // The data models
+│   └── manipulate
+│       ├── resize.go            // APIs for resizing images
+│       └── toolbox.go           // Misc funktions
 │
 ├── config
 │   └── config.go               // Configuration
@@ -47,20 +49,18 @@ go build
 
 ## Eventus API
 
-#### /festivals
-* `GET`     : Get all festivals
-* `POST`    : Create a new festival
+#### /images/upload
+* `POST`    : Upload an image
 
-#### /festivals/{objectID}
-* `GET`     : Get a festival
-* `PATCH`   : Update a festival
-* `DELETE`  : Delete a festival
+#### /images/{imageIdentifier}
+* `GET`     : Get an image
+* `PATCH`   : Replace an image
 
-#### /festivals/{objectID}/{image|links|place|tags}
-* `GET`     : Get the given associated objects
+#### /status
+* `GET`     : Get the server status
 
-#### /festivals/{objectID}/{image|links|place|tags}/{resourceID}
-* `POST`     : Associates the object with the given ID with the festival with the given ID
+#### /status/files
+* `GET`     : Get a list of all files
 
 ## Todo
 
