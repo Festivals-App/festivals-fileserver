@@ -15,7 +15,7 @@ A simple RESTful API with Go using go-chi/chi.
 ## Installation
 
 ```bash
-go get github.com/Phisto/eventusimageserver
+go get github.com/Phisto/eventusfileserver
 ```
 
 # Build and Run
