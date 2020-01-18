@@ -1,14 +1,14 @@
 # VPS Settings
 	
-Name:       - na -
+Name:           - na -
 
-IP4:        - na -
+IP4:            - na -
 
-IP6:        - na -
+IP6:            - na -
     
-Username:   - na -
+Username:       - na -
 
-Password:   - na -
+Password:       - na -
 
 ### Commands:    
 ``
@@ -33,11 +33,17 @@ Config:     /etc/nginx/sites-available/...
 
 ### Commands:	
 ``
+
     sudo nginx -t // test configuration
+
     sudo service nginx start
+
     sudo service nginx stop
+
     sudo service nginx restart
+
     sudo service nginx status
+
 ``
 
 
@@ -49,10 +55,15 @@ Host:		128.0.0.1
 
 ### Commands:    
 ``
+    
     sudo nano /lib/systemd/system/eventusfileserver.service // create service
+    
     sudo service eventusfileserver start
+    
     sudo service eventusfileserver stop
+    
     sudo service eventusfileserver restart
+    
     sudo service eventusfileserver status
 ``
 
