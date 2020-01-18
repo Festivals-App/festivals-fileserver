@@ -11,15 +11,12 @@ Username:       - na -
 Password:       - na -
 
 ### Commands:    
-``
     
     sudo reboot
     
     ufw status // check firewall status
     
     top // displays system resources
-    
-``
 
 
 ## GO Settings
@@ -32,7 +29,6 @@ GOPATH:     - na -
 Config:     /etc/nginx/sites-available/...
 
 ### Commands:	
-``
 
     sudo nginx -t // test configuration
 
@@ -44,8 +40,6 @@ Config:     /etc/nginx/sites-available/...
 
     sudo service nginx status
 
-``
-
 
 ## EVENTUSFILESERVER Settings
 
@@ -54,7 +48,6 @@ Port:       - na -
 Host:		128.0.0.1
 
 ### Commands:    
-``
     
     sudo nano /lib/systemd/system/eventusfileserver.service // create service
     
@@ -65,7 +58,6 @@ Host:		128.0.0.1
     sudo service eventusfileserver restart
     
     sudo service eventusfileserver status
-``
 
 
 ## Resources
