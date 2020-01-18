@@ -20,9 +20,9 @@ go get github.com/Phisto/eventusfileserver
 
 # Build and Run
 ```bash
-go build
-./server
-
+cd $GOPATH/github.com/Phisto/eventusfileserver
+go build main.go
+./main
 # API Endpoint : http://localhost:1910
 ```
 
