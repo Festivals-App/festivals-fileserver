@@ -8,15 +8,18 @@ Eventus file server, a live and lightweight go server app.
 
 A simple RESTful API with Go using go-chi/chi.
 
+
 ## Requirements
 
 -  go 1.11
+
 
 ## Installation
 
 ```bash
 go get github.com/Phisto/eventusfileserver
 ```
+
 
 # Build and Run
 ```bash
@@ -25,6 +28,7 @@ go build main.go
 ./main
 # API Endpoint : http://localhost:1910
 ```
+
 
 ## Structure
 ```
@@ -62,6 +66,7 @@ go build main.go
 #### /status/files
 * `GET`     : Get a list of all files
 
+
 ## Todo
 
 - [x] Support basic REST APIs.
@@ -69,4 +74,5 @@ go build main.go
 - [ ] Write the tests for all APIs.
 - [x] Organize the code with packages
 - [ ] Make docs with GoDoc
-- [ ] Building a deployment process 
+- [o] Building a deployment process
+(- [ ] Replace replacing with deletion)
