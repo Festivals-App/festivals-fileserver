@@ -1,4 +1,6 @@
-# VPS Settings
+# CHEATSHEET
+
+## VPS Settings
 	
 Name:           - na -
 
@@ -49,7 +51,7 @@ Host:		128.0.0.1
 
 ### Commands:    
     
-    sudo nano /lib/systemd/system/eventusfileserver.service // create service
+    sudo nano /lib/systemd/system/eventusfileserver.service // edit the service definition
     
     sudo service eventusfileserver start
     
@@ -58,7 +60,23 @@ Host:		128.0.0.1
     sudo service eventusfileserver restart
     
     sudo service eventusfileserver status
+    
+### Upgrade to newer version
 
+    sudo service eventusfileserver stop
+    
+    sudo service eventusfileserver status
+
+    go get -u all
+    
+    cd $GOPATH/src/github.com/Phisto/eventusfileserver
+    
+    go build main.go
+    
+    service eventusfileserver start
+    
+    https://localhost:1910/status
+    
 
 ## Resources
 
@@ -74,8 +92,11 @@ Setup SSL:
 Setup GO:
 - https://www.digitalocean.com/community/tutorials/how-to-install-go-and-set-up-a-local-programming-environment-on-ubuntu-18-04
 
+Setup Systemd Unit File (service)
+- https://www.digitalocean.com/community/tutorials/how-to-deploy-a-go-web-application-using-nginx-on-ubuntu-18-04
+
 
 ## Remarks:
 
 	- Remove default NGINX config from /etc/nginx/sites-enabled
-	- 
+	- Kubernetes/Docker: https://www.digitalocean.com/community/tutorials/how-to-deploy-resilient-go-app-digitalocean-kubernetes
