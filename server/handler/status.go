@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/config"
 )
 
 type ServerStatus struct {

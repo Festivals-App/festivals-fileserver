@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

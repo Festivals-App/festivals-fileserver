@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
 	"github.com/go-chi/chi"
 	"io/ioutil"

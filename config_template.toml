@@ -1,0 +1,6 @@
+# festivals-fileserver configuration file v1.0
+
+[service]
+storage-url = "/srv/fileserver/images"
+resized-storage-url = "/srv/fileserver/images/resized"
+port = 1910

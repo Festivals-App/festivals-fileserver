@@ -3,7 +3,7 @@ package manipulate
 import (
 	"errors"
 	"fmt"
-	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/disintegration/imaging"
 	"image"
 	"net/url"
