@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/Phisto/eventusfileserver/config"
-	"github.com/Phisto/eventusfileserver/server/handler"
+	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"log"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	config "github.com/Phisto/eventusfileserver/config"
-	server "github.com/Phisto/eventusfileserver/server"
+	config "github.com/Festivals-App/festivals-fileserver/config"
+	server "github.com/Festivals-App/festivals-fileserver/server"
 )
 
 func main() {

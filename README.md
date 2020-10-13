@@ -1,6 +1,6 @@
 # Eventus File Server
 
-[![License](https://img.shields.io/github/license/phisto/eventusfileserver.svg)](https://github.com/Phisto/eventusfileserver)
+[![License](https://img.shields.io/github/license/phisto/festivals-fileserver.svg)](https://github.com/Festivals-App/festivals-fileserver)
 
 Eventus file server, a live and lightweight go server app.
 
@@ -17,13 +17,13 @@ A simple RESTful API with Go using go-chi/chi.
 ## Installation
 
 ```bash
-go get github.com/Phisto/eventusfileserver
+go get github.com/Festivals-App/festivals-fileserver
 ```
 
 
 # Build and Run
 ```bash
-cd $GOPATH/github.com/Phisto/eventusfileserver
+cd $GOPATH/github.com/Festivals-App/festivals-fileserver
 go build main.go
 ./main
 # API Endpoint : http://localhost:1910

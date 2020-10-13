@@ -2,7 +2,7 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/Phisto/eventusfileserver/server/manipulate"
+	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
 	"io"
 	"net/http"
 	"os"

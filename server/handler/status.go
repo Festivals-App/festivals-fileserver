@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Phisto/eventusfileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/config"
 )
 
 type ServerStatus struct {

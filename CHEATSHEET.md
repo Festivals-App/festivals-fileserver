@@ -51,29 +51,29 @@ Host:		128.0.0.1
 
 ### Commands:    
     
-    sudo nano /lib/systemd/system/eventusfileserver.service // edit the service definition
+    sudo nano /lib/systemd/system/festivals-fileserver.service // edit the service definition
     
-    sudo service eventusfileserver start
+    sudo service festivals-fileserver start
     
-    sudo service eventusfileserver stop
+    sudo service festivals-fileserver stop
     
-    sudo service eventusfileserver restart
+    sudo service festivals-fileserver restart
     
-    sudo service eventusfileserver status
+    sudo service festivals-fileserver status
     
 ### Upgrade to newer version
 
-    sudo service eventusfileserver stop
+    sudo service festivals-fileserver stop
     
-    sudo service eventusfileserver status
+    sudo service festivals-fileserver status
 
     go get -u all
     
-    cd $GOPATH/src/github.com/Phisto/eventusfileserver
+    cd $GOPATH/src/github.com/Festivals-App/festivals-fileserver
     
     go build main.go
     
-    service eventusfileserver start
+    service festivals-fileserver start
     
     https://localhost:1910/status
     

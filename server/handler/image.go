@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/Phisto/eventusfileserver/config"
-	"github.com/Phisto/eventusfileserver/server/manipulate"
+	"github.com/Festivals-App/festivals-fileserver/config"
+	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
 	"github.com/go-chi/chi"
 	"io/ioutil"
 	"net/http"
