@@ -34,21 +34,6 @@ TBA
 
 TBA
 
-### API
-
-#### /images/upload
-* `POST`    : Upload an image
-
-#### /images/{imageIdentifier}
-* `GET`     : Get an image
-* `PATCH`   : Replace an image
-
-#### /status
-* `GET`     : Get the server status
-
-#### /status/files
-* `GET`     : Get a list of all files
-
 ### Structure
 ```
 ├── server
@@ -70,22 +55,54 @@ TBA
 ```
 ### Documentation
 
-The full documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains technical documents, architecture information, UI/UX specifications, and whitepapers related to this implementation.
+The FestivalFilesAPI is documented in detail [here](./DOCUMENTATION.md).
+
+The full documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
+The documentation repository contains technical documents, architecture information, UI/UX specifications, and whitepapers related to this implementation.
 
 ## Deployment
 
-Before running the API server, you should set the database config with your values in config/config.go
+The install, update and uninstall scripts should work with any system that uses *systemd* and *firewalld* or *ufw*. 
+Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
 
+Installing
 ```bash
-go get github.com/Festivals-App/festivals-fileserver
+curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-fileserver/master/operation/install.sh
+chmod +x install.sh
+sudo ./install.sh
+```
+Updating
+```bash
+curl -o update.sh https://raw.githubusercontent.com/Festivals-App/festivals-fileserver/master/operation/update.sh
+chmod +x update.sh
+sudo ./update.sh
+```
+Uninstalling
+```bash
+curl -o uninstall.sh https://raw.githubusercontent.com/Festivals-App/festivals-fileserver/master/operation/uninstall.sh
+chmod +x uninstall.sh
+sudo ./uninstall.sh
 ```
 
-### Build and Run
+### Docker
+
 ```bash
-cd $GOPATH/github.com/Festivals-App/festivals-fileserver
+TBA
+```
+
+### macOS
+
+```bash
+TBA
+```
+
+### Build and Run manually
+```bash
+cd $GOPATH/src/github.com/Festivals-App/festivals-fileserver
 go build main.go
 ./main
-# API Endpoint : http://localhost:1910
+
+# Default API Endpoint : http://localhost:1910
 ```
 
 ## Engage
