@@ -1,6 +1,7 @@
 # festivals-fileserver configuration file v1.0
+# TOML 1.0.0-rc.2+
 
 [service]
-storage-url = "/srv/fileserver/images"
-resized-storage-url = "/srv/fileserver/images/resized"
+storage-url = "/srv/festivals-fileserver/images"
+resized-storage-url = "/srv/festivals-fileserver/images/resized"
 port = 1910

@@ -1,0 +1,13 @@
+[Unit]
+Description=Static file server, a live and lightweight go server app.
+ConditionPathExists=/usr/local/bin/festivals-fileserver
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStartPre=/bin/mkdir -p /var/log/festivals-fileserver
+ExecStart=/usr/local/bin/festivals-fileserver
+
+[Install]
+WantedBy=multi-user.target

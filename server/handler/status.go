@@ -19,11 +19,11 @@ type ServerStatus struct {
 	Comment                        string `json:"comment"`
 }
 
-func Status(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 
 	// fetch all original images
-	imageSearchPatern := conf.StorageURL + "/" + "upload-*"
-	images, err := filepath.Glob(imageSearchPatern)
+	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
+	images, err := filepath.Glob(imageSearchPattern)
 	if err != nil {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -36,8 +36,8 @@ func Status(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all resized images
-	resizedSearchPatern := conf.ResizeStorageURL + "/" + "*_upload-*"
-	resizedImages, err := filepath.Glob(resizedSearchPatern)
+	resizedSearchPattern := conf.ResizeStorageURL + "/" + "*_upload-*"
+	resizedImages, err := filepath.Glob(resizedSearchPattern)
 	if err != nil {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -63,19 +63,19 @@ func Status(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, 200, status)
 }
 
-func Files(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 
 	// fetch all original images
-	imageSearchPatern := conf.StorageURL + "/" + "upload-*"
-	images, err := filepath.Glob(imageSearchPatern)
+	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
+	images, err := filepath.Glob(imageSearchPattern)
 	if err != nil {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	/*
 		// fetch all resized images
-		resizedSearchPatern := conf.ResizeStorageURL + "/" + "*_upload-*"
-		resizedImages, err := filepath.Glob(resizedSearchPatern)
+		resizedSearchPattern := conf.ResizeStorageURL + "/" + "*_upload-*"
+		resizedImages, err := filepath.Glob(resizedSearchPattern)
 		if err != nil {
 			respondError(w, http.StatusInternalServerError, err.Error())
 			return
