@@ -1,7 +1,7 @@
 <!--suppress ALL -->
 
 <h1 align="center">
-    FestivalFilesAPI Documentation
+    FestivalFiles API Documentation
 </h1>
 
 <p align="center">
