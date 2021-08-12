@@ -5,3 +5,6 @@
 storage-url = "/srv/festivals-fileserver/images"
 resized-storage-url = "/srv/festivals-fileserver/images/resized"
 port = 1910
+
+[authentication]
+api-keys = ["TEST_API_KEY_001", "TEST_API_KEY_002", "TEST_API_KEY_003"]
