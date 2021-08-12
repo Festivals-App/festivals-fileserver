@@ -80,4 +80,11 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   exit 1
 fi
 
+# Removing unused files
+#
+echo "Cleanup..."
+cd /usr/local || exit
+rm -R /usr/local/festivals-fileserver
+sleep 1
+
 echo "Done."
