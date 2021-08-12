@@ -6,6 +6,7 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/handler"
+	"github.com/Festivals-App/festivals-identity-server/authentication"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -81,7 +82,8 @@ type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r
 
 // inject DB in handler functions
 func (s *Server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+
+	return authentication.IsAuthenticated(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
 		handler(s.Config, w, r)
-	}
+	})
 }
