@@ -1,12 +1,13 @@
 package server
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"log"
-	"net/http"
 )
 
 // Server has router and db instances
@@ -68,6 +69,7 @@ func (s *Server) setRouters() {
 
 // Run the server on it's router
 func (s *Server) Run(host string) {
+	//log.Fatal(http.ListenAndServeTLS(host, "/cert", "/keys", s.Router))
 	log.Fatal(http.ListenAndServe(host, s.Router))
 }
 
