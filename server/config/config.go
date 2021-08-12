@@ -1,15 +1,18 @@
 package config
 
 import (
-	"github.com/pelletier/go-toml"
 	"log"
 	"os"
+
+	"github.com/pelletier/go-toml"
 )
 
 type Config struct {
-	StorageURL       string
-	ResizeStorageURL string
-	ServicePort      int
+	StorageURL         string
+	ResizeStorageURL   string
+	ServiceBindAddress string
+	ServicePort        int
+	APIKeys            []string
 }
 
 func DefaultConfig() *Config {
@@ -26,7 +29,7 @@ func DefaultConfig() *Config {
 	// this is mostly so the application will run in development environment
 	path, err := os.Getwd()
 	if err != nil {
-		log.Fatal("server initialize: could not read current path.")
+		log.Fatal("server initialize: could not read default config file.")
 	}
 	path = path + "/config_template.toml"
 	return ParseConfig(path)
@@ -39,14 +42,23 @@ func ParseConfig(cfgFile string) *Config {
 		log.Fatal("server initialize: could not read config file at '" + cfgFile + "'. Error: " + err.Error())
 	}
 
-	storage_url := content.Get("service.storage-url").(string)
-	servic_resized_storage_url := content.Get("service.resized-storage-url").(string)
+	storageURL := content.Get("service.storage-url").(string)
+	servicResizedStorageURL := content.Get("service.resized-storage-url").(string)
+	serverBindAdress := content.Get("service.bind-address").(string)
 	serverPort := content.Get("service.port").(int64)
 
+	keyValues := content.Get("authentication.api-keys").([]interface{})
+	keys := make([]string, len(keyValues))
+	for i, v := range keyValues {
+		keys[i] = v.(string)
+	}
+
 	return &Config{
-		StorageURL:       storage_url,
-		ResizeStorageURL: servic_resized_storage_url,
-		ServicePort:      int(serverPort),
+		StorageURL:         storageURL,
+		ResizeStorageURL:   servicResizedStorageURL,
+		ServiceBindAddress: serverBindAdress,
+		ServicePort:        int(serverPort),
+		APIKeys:            keys,
 	}
 }
 
