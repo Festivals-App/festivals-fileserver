@@ -57,14 +57,17 @@ func (s *Server) setRouters() {
 
 	// GET requests
 	s.Router.Get("/images/{imageIdentifier}", s.handleRequest(handler.Download))
+	s.Router.Get("/pdf/{pdfIdentifier}", s.handleRequest(handler.Download))
 	s.Router.Get("/status", s.handleRequest(handler.Status))
 	s.Router.Get("/status/files", s.handleRequest(handler.Files))
 
 	// POST requests
 	s.Router.Post("/images/upload", s.handleRequest(handler.MultipartUpload))
+	s.Router.Post("/pdf/upload", s.handleRequest(handler.MultipartUpload))
 
 	// PATCH
 	s.Router.Patch("/images/{imageIdentifier}", s.handleRequest(handler.Update))
+	s.Router.Patch("/pdf/{pdfIdentifier}", s.handleRequest(handler.Update))
 }
 
 // Run the server on it's router
