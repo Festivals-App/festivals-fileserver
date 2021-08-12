@@ -4,6 +4,7 @@
 [service]
 storage-url = "/srv/festivals-fileserver/images"
 resized-storage-url = "/srv/festivals-fileserver/images/resized"
+bind-address = "localhost"
 port = 1910
 
 [authentication]
