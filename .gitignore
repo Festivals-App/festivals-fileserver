@@ -1,6 +1,5 @@
-
-# Created by https://www.gitignore.io/api/go,macos
-# Edit at https://www.gitignore.io/?templates=go,macos
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,go
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,go
 
 ### Go ###
 # Binaries for programs and plugins
@@ -32,6 +31,7 @@
 # Icon must end with two \r
 Icon
 
+
 # Thumbnails
 ._*
 
@@ -51,4 +51,15 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# End of https://www.gitignore.io/api/go,macos
+### VisualStudioCode ###
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,go
