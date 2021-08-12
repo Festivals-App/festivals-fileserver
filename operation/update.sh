@@ -39,9 +39,6 @@ yes | sudo git clone https://github.com/Festivals-App/festivals-fileserver.git /
 cd /usr/local/festivals-fileserver || { echo "Failed to access working directory. Exiting." ; exit 1; }
 go build main.go
 mv main /usr/local/bin/festivals-fileserver || { echo "Failed to install festivals-fileserver binary. Exiting." ; exit 1; }
-mv config_template.toml /etc/festivals-fileserver.conf
-mkdir -p /srv/festivals-fileserver/images/resized >/dev/null || { echo "Failed to create the image directories. Exiting." ; exit 1; }
-mkdir -p /srv/festivals-fileserver/pdf >/dev/null || { echo "Failed to create the pdf directories. Exiting." ; exit 1; }
 echo "Installed festivals-fileserver."
 sleep 1
 
