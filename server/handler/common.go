@@ -2,11 +2,12 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
 	"io"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
 )
 
 // respondJSON makes the response with payload as json format
