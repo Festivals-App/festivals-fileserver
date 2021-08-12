@@ -19,6 +19,11 @@ type ServerStatus struct {
 	Comment                        string `json:"comment"`
 }
 
+type ServerFiles struct {
+	Images []string `json:"images"`
+	PDFs   []string `json:"pdfs"`
+}
+
 func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 
 	// fetch all original images
@@ -72,24 +77,31 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	/*
-		// fetch all resized images
-		resizedSearchPattern := conf.ResizeStorageURL + "/" + "*_upload-*"
-		resizedImages, err := filepath.Glob(resizedSearchPattern)
-		if err != nil {
-			respondError(w, http.StatusInternalServerError, err.Error())
-			return
-		}
-	*/
 
-	var fileNames []string
-
-	for _, i := range images {
-		_, fileName := filepath.Split(i)
-		fileNames = append(fileNames, fileName)
+	// fetch all pdfs
+	pdfSearchPattern := conf.StorageURL + "/" + "upload-*"
+	pdfs, err := filepath.Glob(pdfSearchPattern)
+	if err != nil {
+		respondError(w, http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	respondJSON(w, 200, fileNames)
+	var imageNames []string
+	for _, i := range images {
+		_, fileName := filepath.Split(i)
+		imageNames = append(imageNames, fileName)
+	}
+
+	var pdfNames []string
+	for _, i := range pdfs {
+		_, fileName := filepath.Split(i)
+		pdfNames = append(pdfNames, fileName)
+	}
+
+	respondJSON(w, 200, &ServerFiles{
+		Images: imageNames,
+		PDFs:   pdfNames,
+	})
 }
 
 func ByteCountSI(b int64) string {
