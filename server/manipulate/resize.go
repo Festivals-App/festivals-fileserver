@@ -72,12 +72,7 @@ func Resize(conf *config.Config, objectID string, width int, height int) (*os.Fi
 		return nil, err
 	}
 	// resize image
-	var resizedImage *image.NRGBA
-	if width > height {
-		resizedImage = imaging.Resize(srcImage, width, 0, imaging.CatmullRom)
-	} else {
-		resizedImage = imaging.Resize(srcImage, 0, height, imaging.CatmullRom)
-	}
+	resizedImage := imaging.Fit(srcImage, width, height, imaging.CatmullRom)
 	// make resize dir if it does not exist
 	_ = os.MkdirAll(conf.ResizeStorageURL, os.ModePerm)
 	// create path to resized image
