@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/disintegration/imaging"
-	"image"
 	"net/url"
 	"os"
 	"path/filepath"
