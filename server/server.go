@@ -60,7 +60,7 @@ func (s *Server) setRouters() {
 	s.Router.Get("/version", s.handleRequestWithoutAuthentication(handler.GetVersion))
 	s.Router.Get("/info", s.handleRequestWithoutAuthentication(handler.GetInfo))
 	s.Router.Get("/status", s.handleRequestWithoutAuthentication(handler.Status))
-	s.Router.Get("/files", s.handleRequest(handler.Files))
+	s.Router.Get("/files", s.handleRequestWithoutAuthentication(handler.Files))
 
 	// GET requests
 	s.Router.Get("/images/{imageIdentifier}", s.handleRequest(handler.Download))
