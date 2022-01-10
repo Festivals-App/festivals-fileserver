@@ -15,13 +15,6 @@ cd /usr/local || exit
 # 
 if command -v ufw > /dev/null; then
 
-  ufw default deny incoming >/dev/null
-  ufw default allow outgoing >/dev/null
-  ufw allow OpenSSH >/dev/null
-  yes | sudo ufw enable >/dev/null
-  echo "Enabled ufw"
-  sleep 1
-
   ufw allow 1910/tcp >/dev/null
   echo "Added festivals-fileserver to ufw using port 1910."
   sleep 1
@@ -38,7 +31,6 @@ if ! command -v go > /dev/null; then
   echo "Installing go..."
   apt-get install golang -y > /dev/null;
 fi
-
 
 # Install git if needed.
 #
