@@ -102,7 +102,6 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondFile(w, resizedImage)
-	return
 }
 
 func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
