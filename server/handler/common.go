@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -59,4 +60,23 @@ func respondError(w http.ResponseWriter, code int, message string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	_, _ = w.Write([]byte(response))
+}
+
+//
+func respondString(w http.ResponseWriter, code int, message string) {
+
+	response := []byte(message)
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(code)
+	_, err := w.Write(response)
+	if err != nil {
+		log.Print(err.Error())
+	}
+}
+
+//
+func respondCode(w http.ResponseWriter, code int) {
+
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(code)
 }

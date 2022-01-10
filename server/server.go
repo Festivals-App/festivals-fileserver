@@ -56,11 +56,15 @@ func (s *Server) setWalker() {
 // setRouters sets the all required routers
 func (s *Server) setRouters() {
 
+	s.Router.Get("/health", s.handleRequestWithoutAuthentication(handler.GetHealth))
+	s.Router.Get("/version", s.handleRequestWithoutAuthentication(handler.GetVersion))
+	s.Router.Get("/info", s.handleRequestWithoutAuthentication(handler.GetInfo))
+	s.Router.Get("/status", s.handleRequestWithoutAuthentication(handler.Status))
+	s.Router.Get("/files", s.handleRequest(handler.Files))
+
 	// GET requests
 	s.Router.Get("/images/{imageIdentifier}", s.handleRequest(handler.Download))
 	s.Router.Get("/pdf/{pdfIdentifier}", s.handleRequest(handler.DownloadPDF))
-	s.Router.Get("/status", s.handleRequest(handler.Status))
-	s.Router.Get("/status/files", s.handleRequest(handler.Files))
 
 	// POST requests
 	s.Router.Post("/images/upload", s.handleRequest(handler.MultipartUpload))
@@ -80,10 +84,18 @@ func (s *Server) Run(host string) {
 // function prototype to inject config instance in handleRequest()
 type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r *http.Request)
 
-// inject DB in handler functions
+// inject Config in handler functions
 func (s *Server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
 
 	return authentication.IsAuthenticated(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
 		handler(s.Config, w, r)
+	})
+}
+
+// inject Config in handler functions
+func (s *Server) handleRequestWithoutAuthentication(requestHandler RequestHandlerFunction) http.HandlerFunc {
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestHandler(s.Config, w, r)
 	})
 }

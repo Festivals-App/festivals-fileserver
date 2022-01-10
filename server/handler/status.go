@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
+	"github.com/Festivals-App/festivals-fileserver/server/status"
 )
 
 type ServerStatus struct {
@@ -102,6 +103,21 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 		Images: imageNames,
 		PDFs:   pdfNames,
 	})
+}
+
+func GetVersion(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	respondString(w, http.StatusOK, status.VersionString())
+}
+
+func GetInfo(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	respondJSON(w, http.StatusOK, status.InfoString())
+}
+
+func GetHealth(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	respondCode(w, status.HealthStatus())
 }
 
 func ByteCountSI(b int64) string {
