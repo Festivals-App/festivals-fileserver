@@ -8,7 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 var kMaxPDFSize int64 = 10 << 20
