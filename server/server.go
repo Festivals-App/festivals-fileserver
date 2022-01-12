@@ -22,12 +22,14 @@ func (s *Server) Initialize(config *config.Config) {
 
 	// create router
 	s.Router = chi.NewRouter()
+
 	// set config
 	s.Config = config
+
 	// prepare  Router
 	s.setMiddleware()
 	s.setWalker()
-	s.setRouters()
+	s.setRoutes()
 }
 
 func (s *Server) setMiddleware() {
@@ -35,9 +37,7 @@ func (s *Server) setMiddleware() {
 	s.Router.Use(
 		// used to log the request to the console | development
 		middleware.Logger,
-		// helps to redirect wrong requests (why do one want that?)
-		//middleware.RedirectSlashes,
-		// tries to recover after panics (?)
+		// tries to recover after panics
 		middleware.Recoverer,
 	)
 }
@@ -54,7 +54,7 @@ func (s *Server) setWalker() {
 }
 
 // setRouters sets the all required routers
-func (s *Server) setRouters() {
+func (s *Server) setRoutes() {
 
 	s.Router.Get("/health", s.handleRequestWithoutAuthentication(handler.GetHealth))
 	s.Router.Get("/version", s.handleRequestWithoutAuthentication(handler.GetVersion))
@@ -73,6 +73,10 @@ func (s *Server) setRouters() {
 	// PATCH
 	s.Router.Patch("/images/{imageIdentifier}", s.handleRequest(handler.Update))
 	s.Router.Patch("/pdf/{pdfIdentifier}", s.handleRequest(handler.UpdatePDF))
+}
+
+func (s *Server) setFestivaslFilesAPIRoutes() {
+
 }
 
 // Run the server on it's router
