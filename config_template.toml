@@ -8,4 +8,5 @@ bind-address = "localhost"
 port = 1910
 
 [authentication]
+heartbeat = "localhost"
 api-keys = ["TEST_API_KEY_001", "TEST_API_KEY_002", "TEST_API_KEY_003"]
