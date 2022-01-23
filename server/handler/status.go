@@ -60,9 +60,9 @@ func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 		Images:                         len(images),
 		ResizedImages:                  len(resizedImages),
 		ImagesSize:                     imagesSize,
-		ImagesSizeHumanReadable:        ByteCountSI(imagesSize),
+		ImagesSizeHumanReadable:        byteCountSI(imagesSize),
 		ResizedImagesSize:              resizedImagesSize,
-		ResizedImagesSizeHumanReadable: ByteCountSI(resizedImagesSize),
+		ResizedImagesSizeHumanReadable: byteCountSI(resizedImagesSize),
 		Comment:                        "",
 	}
 
@@ -120,7 +120,7 @@ func GetHealth(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	respondCode(w, status.HealthStatus())
 }
 
-func ByteCountSI(b int64) string {
+func byteCountSI(b int64) string {
 	const unit = 1000
 	if b < unit {
 		return fmt.Sprintf("%d B", b)
