@@ -9,8 +9,8 @@
 
 # Move to working dir
 #
-mkdir /usr/local/festivals-server || { echo "Failed to create working directory. Exiting." ; exit 1; }
-cd /usr/local/festivals-server || { echo "Failed to access working directory. Exiting." ; exit 1; }
+mkdir /usr/local/festivals-fileserver || { echo "Failed to create working directory. Exiting." ; exit 1; }
+cd /usr/local/festivals-fileserver || { echo "Failed to access working directory. Exiting." ; exit 1; }
 
 echo "Installing festivals-fileserver using port 1910."
 sleep 1
@@ -92,7 +92,7 @@ fi
 # Removing unused files
 #
 echo "Cleanup..."
-cd /usr/local || exit
+cd ~/ || exit
 rm -R /usr/local/festivals-fileserver
 sleep 1
 
