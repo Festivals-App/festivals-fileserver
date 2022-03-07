@@ -12,7 +12,7 @@ require (
 
 require (
 	github.com/go-chi/chi v1.5.4 // indirect
-	github.com/rs/zerolog v1.26.1 // indirect
-	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
+	github.com/rs/zerolog v1.26.1
+	golang.org/x/image v0.0.0-20220302094943-723b81ca9867 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
