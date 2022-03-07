@@ -9,51 +9,61 @@
 
 # Move to working dir
 #
-cd /usr/local || exit
+mkdir /usr/local/festivals-server || { echo "Failed to create working directory. Exiting." ; exit 1; }
+cd /usr/local/festivals-server || { echo "Failed to access working directory. Exiting." ; exit 1; }
 
-# Stop the festivals-server
+# Stop the festivals-fileserver
 #
 systemctl stop festivals-fileserver
 echo "Stopped festivals-fileserver"
 sleep 1
 
-# Install go if needed.
-# Binaries linked to /usr/local/bin
+# Get system os
 #
-if ! command -v go > /dev/null; then
-  echo "Installing go..."
-  apt-get install golang -y > /dev/null;
+if [ "$(uname -s)" = "Darwin" ]; then
+  os="darwin"
+elif [ "$(uname -s)" = "Linux" ]; then
+  os="linux"
+else
+  echo "System is not Darwin or Linux. Exiting."
+  exit 1
 fi
 
-# Install git if needed.
+# Get systems cpu architecture
 #
-if ! command -v git > /dev/null; then
-  echo "Installing git..."
-  apt-get install git -y > /dev/null;
+if [ "$(uname -m)" = "x86_64" ]; then
+  arch="amd64"
+elif [ "$(uname -m)" = "arm64" ]; then
+  arch="arm64"
+else
+  echo "System is not x86_64 or arm64. Exiting."
+  exit 1
 fi
 
-# Updating festivals-fileserver to the newest version
+# Build url to latest binary for the given system
 #
-echo "Downloading current festivals-fileserver..."
-yes | sudo git clone https://github.com/Festivals-App/festivals-fileserver.git /usr/local/festivals-fileserver > /dev/null;
-cd /usr/local/festivals-fileserver || { echo "Failed to access working directory. Exiting." ; exit 1; }
-go build main.go
-mv main /usr/local/bin/festivals-fileserver || { echo "Failed to install festivals-fileserver binary. Exiting." ; exit 1; }
-echo "Installed festivals-fileserver."
+file_url="https://github.com/Festivals-App/festivals-fileserver/releases/latest/download/festivals-fileserver-$os-$arch.tar.gz"
+echo "The system is $os on $arch."
 sleep 1
 
-# Updating go to the newest version
+# Updating festivals-fileserver to the newest binary release
 #
-systemctl start festivals-fileserver
-echo "Started festivals-fileserver"
+echo "Downloading newest festivals-fileserver binary release..."
+curl -L "$file_url" -o festivals-fileserver.tar.gz
+tar -xf festivals-fileserver.tar.gz
+mv festivals-fileserver /usr/local/bin/festivals-fileserver || { echo "Failed to install festivals-fileserver binary. Exiting." ; exit 1; }
+echo "Updated festivals-fileserver binary."
 sleep 1
 
 # Removing unused files
 #
 echo "Cleanup..."
-cd /usr/local || exit
-rm -R /usr/local/festivals-fileserver
+cd ~/ || { echo "Failed to access home directory. Exiting." ; exit 1; }
+rm -r /usr/local/festivals-server
 sleep 1
 
 echo "Done!"
+sleep 1
+
+echo "Please start the server manually by running 'systemctl start festivals-fileserver' after you updated the configuration file at '/etc/festivals-fileserver.conf'"
 sleep 1
