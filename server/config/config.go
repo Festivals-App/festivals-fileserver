@@ -1,10 +1,10 @@
 package config
 
 import (
-	"log"
 	"os"
 
 	"github.com/pelletier/go-toml"
+	"github.com/rs/zerolog/log"
 )
 
 type Config struct {
@@ -12,8 +12,10 @@ type Config struct {
 	ResizeStorageURL   string
 	ServiceBindAddress string
 	ServicePort        int
+	ServiceKey         string
 	LoversEar          string
 	APIKeys            []string
+	AdminKeys          []string
 }
 
 func DefaultConfig() *Config {
@@ -30,7 +32,7 @@ func DefaultConfig() *Config {
 	// this is mostly so the application will run in development environment
 	path, err := os.Getwd()
 	if err != nil {
-		log.Fatal("server initialize: could not read default config file.")
+		log.Fatal().Msg("server initialize: could not read default config file with error:" + err.Error())
 	}
 	path = path + "/config_template.toml"
 	return ParseConfig(path)
@@ -40,18 +42,26 @@ func ParseConfig(cfgFile string) *Config {
 
 	content, err := toml.LoadFile(cfgFile)
 	if err != nil {
-		log.Fatal("server initialize: could not read config file at '" + cfgFile + "'. Error: " + err.Error())
+		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
 	storageURL := content.Get("service.storage-url").(string)
 	servicResizedStorageURL := content.Get("service.resized-storage-url").(string)
 	serverBindAdress := content.Get("service.bind-address").(string)
 	serverPort := content.Get("service.port").(int64)
+	serviceKey := content.Get("service.key").(string)
+
 	loversearEndpoint := content.Get("authentication.heartbeat").(string)
+
 	keyValues := content.Get("authentication.api-keys").([]interface{})
 	keys := make([]string, len(keyValues))
 	for i, v := range keyValues {
 		keys[i] = v.(string)
+	}
+	adminKeyValues := content.Get("authentication.admin-keys").([]interface{})
+	adminKeys := make([]string, len(adminKeyValues))
+	for i, v := range adminKeyValues {
+		adminKeys[i] = v.(string)
 	}
 
 	return &Config{
@@ -59,8 +69,10 @@ func ParseConfig(cfgFile string) *Config {
 		ResizeStorageURL:   servicResizedStorageURL,
 		ServiceBindAddress: serverBindAdress,
 		ServicePort:        int(serverPort),
+		ServiceKey:         serviceKey,
 		LoversEar:          loversearEndpoint,
 		APIKeys:            keys,
+		AdminKeys:          adminKeys,
 	}
 }
 
