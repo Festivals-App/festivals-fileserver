@@ -22,7 +22,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxFileSize)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `myFile`
@@ -30,7 +30,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// the Header and the size of the file
 	file, _, err := r.FormFile("image")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
@@ -38,7 +38,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// create intermidiate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -46,7 +46,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// a particular naming pattern
 	tempFile, err := ioutil.TempFile(conf.StorageURL, "upload-*.jpg")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer tempFile.Close()
@@ -55,13 +55,13 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// write this byte array to our temporary file
 	_, err = tempFile.Write(fileBytes)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// return that we have successfully uploaded our file!
@@ -77,7 +77,7 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	imagepath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(imagepath) {
-		respondError(w, 404, "File does not exist.")
+		respondError(w, http.StatusBadRequest, "File does not exist.")
 		return
 	}
 	// get query values if the exist
@@ -87,7 +87,7 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 		img, err := os.Open(imagepath)
 		// we assume the image does not exist
 		if err != nil {
-			respondError(w, 404, err.Error())
+			respondError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
@@ -111,7 +111,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	imagepath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(imagepath) {
-		respondError(w, 404, "File does not exist.")
+		respondError(w, http.StatusBadRequest, "File does not exist.")
 		return
 	}
 	// limit the request to kMaxFileSize
@@ -120,7 +120,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxFileSize)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `myFile`
@@ -128,7 +128,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// the Header and the size of the file
 	file, _, err := r.FormFile("image")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
@@ -136,7 +136,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create intermediate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -144,7 +144,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -152,7 +152,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// a particular naming pattern
 	err = ioutil.WriteFile(imagepath, fileBytes, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		respondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
