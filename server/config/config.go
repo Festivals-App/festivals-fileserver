@@ -51,7 +51,7 @@ func ParseConfig(cfgFile string) *Config {
 	serverPort := content.Get("service.port").(int64)
 	serviceKey := content.Get("service.key").(string)
 
-	loversearEndpoint := content.Get("authentication.heartbeat").(string)
+	loversear := content.Get("heartbeat.endpoint").(string)
 
 	keyValues := content.Get("authentication.api-keys").([]interface{})
 	keys := make([]string, len(keyValues))
@@ -70,7 +70,7 @@ func ParseConfig(cfgFile string) *Config {
 		ServiceBindAddress: serverBindAdress,
 		ServicePort:        int(serverPort),
 		ServiceKey:         serviceKey,
-		LoversEar:          loversearEndpoint,
+		LoversEar:          loversear,
 		APIKeys:            keys,
 		AdminKeys:          adminKeys,
 	}
