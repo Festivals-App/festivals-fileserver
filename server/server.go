@@ -58,6 +58,7 @@ func (s *Server) setRoutes() {
 	s.Router.Get("/info", s.handleRequestWithoutAuthentication(handler.GetInfo))
 	s.Router.Get("/health", s.handleRequestWithoutAuthentication(handler.GetHealth))
 
+	s.Router.Post("/update", s.handleAdminRequest(handler.MakeUpdate))
 	s.Router.Get("/log", s.handleAdminRequest(handler.GetLog))
 	s.Router.Get("/status", s.handleAdminRequest(handler.Status))
 	s.Router.Get("/files", s.handleAdminRequest(handler.Files))
