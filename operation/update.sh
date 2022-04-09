@@ -9,8 +9,8 @@
 
 # Move to working dir
 #
-mkdir /usr/local/festivals-server || { echo "Failed to create working directory. Exiting." ; exit 1; }
-cd /usr/local/festivals-server || { echo "Failed to access working directory. Exiting." ; exit 1; }
+mkdir /usr/local/festivals-fileserver/install || { echo "Failed to create working directory. Exiting." ; exit 1; }
+cd /usr/local/festivals-fileserver/install || { echo "Failed to access working directory. Exiting." ; exit 1; }
 
 # Stop the festivals-fileserver
 #
@@ -58,12 +58,15 @@ sleep 1
 # Removing unused files
 #
 echo "Cleanup..."
-cd ~/ || { echo "Failed to access home directory. Exiting." ; exit 1; }
-rm -r /usr/local/festivals-server
+cd /usr/local/festivals-fileserver || { echo "Failed to access home directory. Exiting." ; exit 1; }
+rm -r /usr/local/festivals-fileserver/install
+sleep 1
+
+# Start the festivals-fileserver
+#
+systemctl start festivals-fileserver
+echo "Started festivals-fileserver"
 sleep 1
 
 echo "Done!"
-sleep 1
-
-echo "Please start the server manually by running 'systemctl start festivals-fileserver' after you updated the configuration file at '/etc/festivals-fileserver.conf'"
 sleep 1
