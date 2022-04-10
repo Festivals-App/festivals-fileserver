@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-	logger.Initialize("/var/log/festivals-filego server/info.log", true)
+	logger.Initialize("/var/log/festivals-fileserver/info.log", true)
 
 	log.Info().Msg("Server startup.")
 
