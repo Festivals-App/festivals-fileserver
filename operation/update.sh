@@ -12,12 +12,6 @@
 mkdir /usr/local/festivals-fileserver/install || { echo "Failed to create working directory. Exiting." ; exit 1; }
 cd /usr/local/festivals-fileserver/install || { echo "Failed to access working directory. Exiting." ; exit 1; }
 
-# Stop the festivals-fileserver
-#
-systemctl stop festivals-fileserver
-echo "Stopped festivals-fileserver"
-sleep 1
-
 # Get system os
 #
 if [ "$(uname -s)" = "Darwin" ]; then
@@ -62,9 +56,9 @@ cd /usr/local/festivals-fileserver || { echo "Failed to access home directory. E
 rm -r /usr/local/festivals-fileserver/install
 sleep 1
 
-# Start the festivals-fileserver
+# Restart the festivals-fileserver
 #
-systemctl start festivals-fileserver
+systemctl restart festivals-fileserver
 echo "Started festivals-fileserver"
 sleep 1
 
