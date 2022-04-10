@@ -3,7 +3,7 @@ module github.com/Festivals-App/festivals-fileserver
 go 1.17
 
 require (
-	github.com/Festivals-App/festivals-gateway v1.1.0
+	github.com/Festivals-App/festivals-gateway v1.1.1
 	github.com/Festivals-App/festivals-identity-server v0.0.0-20220303023324-f741680114a8
 	github.com/disintegration/imaging v1.6.2
 	github.com/go-chi/chi/v5 v5.0.7
