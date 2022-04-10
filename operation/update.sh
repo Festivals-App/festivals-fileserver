@@ -59,7 +59,7 @@ sleep 1
 # Restart the festivals-fileserver
 #
 systemctl restart festivals-fileserver
-echo "Started festivals-fileserver"
+echo "Restarted the festivals-fileserver"
 sleep 1
 
 echo "Done!"
