@@ -1,6 +1,6 @@
 module github.com/Festivals-App/festivals-fileserver
 
-go 1.18
+go 1.20
 
 require (
 	github.com/Festivals-App/festivals-gateway v1.3.0
