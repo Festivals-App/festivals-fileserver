@@ -18,6 +18,6 @@ require (
 require (
 	github.com/go-chi/chi v1.5.4 // indirect
 	github.com/rs/zerolog v1.26.1
-	golang.org/x/image v0.0.0-20220413100746-70e8d0d3baa9 // indirect
+	golang.org/x/image v0.5.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
