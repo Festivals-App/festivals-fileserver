@@ -22,33 +22,19 @@ type Server struct {
 func (s *Server) Initialize(config *config.Config) {
 
 	s.Router = chi.NewRouter()
-
 	s.Config = config
-
 	s.setMiddleware()
-	s.setWalker()
 	s.setRoutes()
 }
 
 func (s *Server) setMiddleware() {
 	// tell the ruter which middleware to use
 	s.Router.Use(
-		// used to log the request to the console | development
-		logger.Middleware(&log.Logger),
+		// used to log the request to the log files
+		logger.Middleware(logger.TraceLogger("/var/log/festivals-fileserver/trace.log")),
 		// tries to recover after panics
 		middleware.Recoverer,
 	)
-}
-
-func (s *Server) setWalker() {
-
-	walkFunc := func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
-		log.Info().Msg(method + " " + route + " \n")
-		return nil
-	}
-	if err := chi.Walk(s.Router, walkFunc); err != nil {
-		log.Panic().Msg(err.Error())
-	}
 }
 
 // setRouters sets the all required routers
@@ -60,6 +46,7 @@ func (s *Server) setRoutes() {
 
 	s.Router.Post("/update", s.handleAdminRequest(handler.MakeUpdate))
 	s.Router.Get("/log", s.handleAdminRequest(handler.GetLog))
+	s.Router.Get("/log/trace", s.handleAdminRequest(handler.GetTraceLog))
 	s.Router.Get("/status", s.handleAdminRequest(handler.Status))
 	s.Router.Get("/files", s.handleAdminRequest(handler.Files))
 
