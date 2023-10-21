@@ -2,11 +2,17 @@
 # TOML 1.0.0-rc.2+
 
 [service]
-storage-url = "/srv/festivals-fileserver/images"
-resized-storage-url = "/srv/festivals-fileserver/images/resized"
 bind-address = "localhost"
+bind-host = "localhost"
 port = 1910
 key = "TEST_API_KEY_001"
+storage-url = "/srv/festivals-fileserver/images"
+resized-storage-url = "/srv/festivals-fileserver/images/resized"
+
+[tls]
+festivaslapp-root-ca = "/usr/local/festivals-fileserver/ca.crt"
+cert = "/usr/local/festivals-fileserver/server.crt"
+key = "/usr/local/festivals-fileserver/server.key"
 
 [heartbeat]
 endpoint = "localhost"

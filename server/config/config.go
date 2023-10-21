@@ -8,14 +8,18 @@ import (
 )
 
 type Config struct {
-	StorageURL         string
-	ResizeStorageURL   string
 	ServiceBindAddress string
+	ServiceBindHost    string
 	ServicePort        int
 	ServiceKey         string
+	TLSRootCert        string
+	TLSCert            string
+	TLSKey             string
 	LoversEar          string
 	APIKeys            []string
 	AdminKeys          []string
+	StorageURL         string
+	ResizeStorageURL   string
 }
 
 func DefaultConfig() *Config {
@@ -45,11 +49,14 @@ func ParseConfig(cfgFile string) *Config {
 		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
-	storageURL := content.Get("service.storage-url").(string)
-	servicResizedStorageURL := content.Get("service.resized-storage-url").(string)
-	serverBindAdress := content.Get("service.bind-address").(string)
+	serviceBindAdress := content.Get("service.bind-address").(string)
+	serviceBindHost := content.Get("service.bind-host").(string)
 	serverPort := content.Get("service.port").(int64)
 	serviceKey := content.Get("service.key").(string)
+
+	tlsrootcert := content.Get("tls.festivaslapp-root-ca").(string)
+	tlscert := content.Get("tls.cert").(string)
+	tlskey := content.Get("tls.key").(string)
 
 	loversear := content.Get("heartbeat.endpoint").(string)
 
@@ -64,15 +71,22 @@ func ParseConfig(cfgFile string) *Config {
 		adminKeys[i] = v.(string)
 	}
 
+	storageURL := content.Get("service.storage-url").(string)
+	servicResizedStorageURL := content.Get("service.resized-storage-url").(string)
+
 	return &Config{
-		StorageURL:         storageURL,
-		ResizeStorageURL:   servicResizedStorageURL,
-		ServiceBindAddress: serverBindAdress,
+		ServiceBindAddress: serviceBindAdress,
+		ServiceBindHost:    serviceBindHost,
 		ServicePort:        int(serverPort),
 		ServiceKey:         serviceKey,
+		TLSRootCert:        tlsrootcert,
+		TLSCert:            tlscert,
+		TLSKey:             tlskey,
 		LoversEar:          loversear,
 		APIKeys:            keys,
 		AdminKeys:          adminKeys,
+		StorageURL:         storageURL,
+		ResizeStorageURL:   servicResizedStorageURL,
 	}
 }
 
