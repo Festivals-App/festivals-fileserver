@@ -3,8 +3,8 @@ module github.com/Festivals-App/festivals-fileserver
 go 1.20
 
 require (
-	github.com/Festivals-App/festivals-gateway v1.4.8
-	github.com/Festivals-App/festivals-identity-server v0.0.6
+	github.com/Festivals-App/festivals-gateway v1.5.0
+	github.com/Festivals-App/festivals-identity-server v0.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/pelletier/go-toml v1.9.5
