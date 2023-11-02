@@ -37,9 +37,8 @@ The developement of the [FestivalsFilesAPI](./DOCUMENTATION.md) and the festival
 
 ## Deployment
 
-Running the festivals-fileserver is pretty easy because Go binaries are able to run without system dependencies 
-on the target for which they are compiled. The only dependency is that the festivals-fileserver expects either a config file at `/etc/festivals-fileserver.conf`,
-the environment variables set or the template config file present in the directory it runs from.
+The festivals-fileserver expects either a config file at `/etc/festivals-fileserver.conf` or the template config file present in the directory it runs from, 
+it also expects the root certificate and the server certificate and key to establish secure inter-service communication as well as the client-service communication.
 
 ### Build and Run manually
 
