@@ -10,7 +10,7 @@
     <br/><br/>
 </h1>
 
-A lightweight go server app providing a simple RESTful API called FestivalsFilesAPI. The FestivalsFilesAPI
+A lightweight go server app providing a RESTful API called FestivalsFilesAPI. The FestivalsFilesAPI
 exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
 
 ![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_files.png "Figure 1: Architecture Overview Highlighted")
