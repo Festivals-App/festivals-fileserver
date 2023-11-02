@@ -8,6 +8,11 @@
    <a href="./LICENSE" title="License"><img src="https://img.shields.io/github/license/festivals-app/festivals-fileserver.svg"></a>
 </p>
 
+A lightweight go server app providing a simple RESTful API using [go-chi/chi](https://github.com/go-chi/chi). The FestivalsFilesAPI
+exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
+
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_files.png "Figure 1: Architecture Overview Highlighted")
+
 <p align="center">
   <a href="#development">Development</a> •
   <a href="#deployment">Deployment</a> •
@@ -16,10 +21,6 @@
   <a href="#engage">Engage</a> •
   <a href="#licensing">Licensing</a>
 </p>
-
-A live and lightweight go server app providing a simple RESTful API using [go-chi/chi](https://github.com/go-chi/chi). The FestivalsFilesAPI exposes file storage and manipulation functions to be used for all files assets used by the [festivalsapp](https://github.com/Festivals-App/festivals-documentation).
-
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_files.png "Figure 1: Architecture Overview Highlighted")
 
 ## Development
 
