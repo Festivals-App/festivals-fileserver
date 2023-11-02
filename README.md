@@ -10,6 +10,7 @@
     <br/><br/>
 </h1>
 
+<hr />
 <p align="center">
   <a href="#development">Development</a> •
   <a href="#deployment">Deployment</a> •
@@ -18,6 +19,7 @@
   <a href="#engage">Engage</a> •
   <a href="#licensing">Licensing</a>
 </p>
+<hr />
 
 A lightweight go server app providing a simple RESTful API using [go-chi/chi](https://github.com/go-chi/chi). The FestivalsFilesAPI
 exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
