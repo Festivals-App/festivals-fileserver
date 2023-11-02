@@ -17,42 +17,20 @@
   <a href="#licensing">Licensing</a>
 </p>
 
-A live and lightweight go server app providing a simple RESTful API called FestivalsFilesAPI using [go-chi/chi](https://github.com/go-chi/chi).
+A live and lightweight go server app providing a simple RESTful API using [go-chi/chi](https://github.com/go-chi/chi). The FestivalsFilesAPI exposes file storage and manipulation functions to be used for all files assets used by the [festivalsapp](https://github.com/Festivals-App/festivals-documentation).
+
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_files.png "Figure 1: Architecture Overview Highlighted")
 
 ## Development
 
-The developement of the [FestivalsFilesAPI](./DOCUMENTATION.md) and the festivals-fileserver is quite forward and does *not* dependend on the [festivals-api-ios](https://github.com/Festivals-App/festivals-api-ios) client library.
+The developement of the [FestivalsFilesAPI](./DOCUMENTATION.md) and the festivals-fileserver is quite forward and does *not* dependend on the [festivals-api-ios](https://github.com/Festivals-App/festivals-api-ios) client library directly.
 
 ### Requirements
 
-- [Golang](https://go.dev/) Version 1.17+
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.63.2+
+- [Golang](https://go.dev/) Version 1.20+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.83.1+
     * Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
-
-### Structure
-```
-├── server
-│   ├── server.go               // server logic
-│   │
-│   ├── config
-│   │   └── config.go           // Server configuration
-|   |
-│   ├── handler                 // API handlers
-│   │   ├── common.go           // Common response functions
-│   │   ├── image.go            // APIs for handling images
-│   │   ├── pdf.go              // APIs for handling pdfs
-│   │   └── status.go           // Handling status server status requests
-│   │
-│   └── manipulate
-│   │   ├── resize.go            // APIs for resizing images
-│   │   └── toolbox.go           // Misc funktions
-│   │
-│   └── status
-│       └── status.go           // API for the status of the application
-│
-└── main.go               
-```
 
 ## Deployment
 
@@ -68,7 +46,7 @@ make build
 (make install)
 make run
 
-# Default API Endpoint : http://localhost:1910
+# Default API Endpoint : https://localhost:1910
 ```
 
 ### VM deployment
@@ -97,13 +75,7 @@ sudo ./uninstall.sh
 
 To see if the server is running use:
 ```bash
-systemctl status festivals-fileserver
-```
-
-### Container deployment
-
-```bash
-TBA
+sudo systemctl status festivals-fileserver
 ```
 
 ### FestivalsFilesAPI
@@ -112,14 +84,12 @@ The FestivalFilesAPI is documented in detail [here](./DOCUMENTATION.md).
 
 ## Architecture
 
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_fileserver.png "Figure 1: Architecture Overview Highlighted")
-
 The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. 
 The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
 ## Engage
 
-I welcome every contribution, whether it is a pull request or a fixed typo. The best place to discuss questions and suggestions regarding the festivals-server is the [issues](https://github.com/festivals-app/festivals-fileserver/issues/) section. More general information and a good starting point if you want to get involved is the [festival-documentation](https://github.com/Festivals-App/festivals-documentation) repository.
+I welcome every contribution, whether it is a pull request or a fixed typo. The best place to discuss questions and suggestions regarding the festivals-fileserver is the [issues](https://github.com/festivals-app/festivals-fileserver/issues/) section. More general information and a good starting point if you want to get involved is the [festival-documentation](https://github.com/Festivals-App/festivals-documentation) repository.
 
 The following channels are available for discussions, feedback, and support requests:
 
@@ -130,7 +100,7 @@ The following channels are available for discussions, feedback, and support requ
 
 ## Licensing
 
-Copyright (c) 2017-2022 Simon Gaus.
+Copyright (c) 2017-2023 Simon Gaus.
 
 Licensed under the **GNU Lesser General Public License v3.0** (the "License"); you may not use this file except in compliance with the License.
 
