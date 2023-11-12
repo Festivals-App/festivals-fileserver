@@ -83,6 +83,7 @@ sleep 1
 
 ## Prepare server update workflow
 mv update.sh /usr/local/festivals-fileserver/update.sh
+chmod +x /usr/local/festivals-fileserver/update.sh
 cp /etc/sudoers /tmp/sudoers.bak
 echo "$WEB_USER ALL = (ALL) NOPASSWD: /usr/local/festivals-fileserver/update.sh" >> /tmp/sudoers.bak
 # Check syntax of the backup file to make sure it is correct.
