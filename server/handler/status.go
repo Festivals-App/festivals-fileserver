@@ -8,6 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/status"
+	servertools "github.com/Festivals-App/festivals-server-tools"
 )
 
 type ServerStatus struct {
@@ -31,7 +32,7 @@ func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
 	images, err := filepath.Glob(imageSearchPattern)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -45,7 +46,7 @@ func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	resizedSearchPattern := conf.ResizeStorageURL + "/" + "*_upload-*"
 	resizedImages, err := filepath.Glob(resizedSearchPattern)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -66,7 +67,7 @@ func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 		Comment:                        "",
 	}
 
-	respondJSON(w, 200, status)
+	servertools.RespondJSON(w, 200, status)
 }
 
 func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
@@ -75,7 +76,7 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
 	images, err := filepath.Glob(imageSearchPattern)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -83,7 +84,7 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	pdfSearchPattern := conf.StorageURL + "/" + "upload-*"
 	pdfs, err := filepath.Glob(pdfSearchPattern)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -99,7 +100,7 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 		pdfNames = append(pdfNames, fileName)
 	}
 
-	respondJSON(w, 200, &ServerFiles{
+	servertools.RespondJSON(w, 200, &ServerFiles{
 		Images: imageNames,
 		PDFs:   pdfNames,
 	})
@@ -107,17 +108,17 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 
 func GetVersion(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 
-	respondString(w, http.StatusOK, status.VersionString())
+	servertools.RespondString(w, http.StatusOK, status.VersionString())
 }
 
 func GetInfo(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 
-	respondJSON(w, http.StatusOK, status.InfoString())
+	servertools.RespondJSON(w, http.StatusOK, status.InfoString())
 }
 
 func GetHealth(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 
-	respondCode(w, status.HealthStatus())
+	servertools.RespondCode(w, status.HealthStatus())
 }
 
 func byteCountSI(b int64) string {

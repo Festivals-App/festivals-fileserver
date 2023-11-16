@@ -8,6 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
+	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -23,7 +24,7 @@ func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Requ
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxFileSize)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `pdf`
@@ -31,7 +32,7 @@ func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Requ
 	// the Header and the size of the file
 	file, _, err := r.FormFile("pdf")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	defer file.Close()
@@ -39,7 +40,7 @@ func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Requ
 	// create intermidiate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 
@@ -47,7 +48,7 @@ func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Requ
 	// a particular naming pattern
 	tempFile, err := ioutil.TempFile(conf.StorageURL, "upload-*.pdf")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	defer tempFile.Close()
@@ -56,19 +57,19 @@ func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Requ
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	// write this byte array to our temporary file
 	_, err = tempFile.Write(fileBytes)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	// return that we have successfully uploaded our file!
 	path := tempFile.Name()
 	_, fileName := filepath.Split(path)
-	respondJSON(w, 201, fileName)
+	servertools.RespondJSON(w, 201, fileName)
 }
 
 func DownloadPDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
@@ -78,14 +79,14 @@ func DownloadPDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	pdfpath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(pdfpath) {
-		respondError(w, 404, "File does not exist.")
+		servertools.RespondError(w, 404, "File does not exist.")
 		return
 	}
 
 	pdf, err := os.Open(pdfpath)
 	// we assume the pdf does not exist
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 
@@ -99,7 +100,7 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	pdfpath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(pdfpath) {
-		respondError(w, 404, "File does not exist.")
+		servertools.RespondError(w, 404, "File does not exist.")
 		return
 	}
 	// limit the request to kMaxFileSize
@@ -108,7 +109,7 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxPDFSize)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `myFile`
@@ -116,7 +117,7 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// the Header and the size of the file
 	file, _, err := r.FormFile("pdf")
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	defer file.Close()
@@ -124,7 +125,7 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create intermediate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 
@@ -132,7 +133,7 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 
@@ -140,11 +141,11 @@ func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// a particular naming pattern
 	err = ioutil.WriteFile(pdfpath, fileBytes, os.ModePerm)
 	if err != nil {
-		respondError(w, 404, err.Error())
+		servertools.RespondError(w, 404, err.Error())
 		return
 	}
 	defer file.Close()
 
 	// return that we have successfully uploaded our file!
-	respondJSON(w, 201, objectID)
+	servertools.RespondJSON(w, 201, objectID)
 }

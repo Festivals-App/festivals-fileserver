@@ -4,12 +4,12 @@ import (
 	"crypto/tls"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/handler"
-	"github.com/Festivals-App/festivals-gateway/server/logger"
-	"github.com/Festivals-App/festivals-identity-server/authentication"
 	festivalspki "github.com/Festivals-App/festivals-pki"
+	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/zerolog/log"
@@ -52,7 +52,7 @@ func (s *Server) setMiddleware() {
 	// tell the ruter which middleware to use
 	s.Router.Use(
 		// used to log the request to the log files
-		logger.Middleware(logger.TraceLogger("/var/log/festivals-fileserver/trace.log")),
+		servertools.Middleware(servertools.TraceLogger("/var/log/festivals-fileserver/trace.log")),
 		// tries to recover after panics
 		middleware.Recoverer,
 	)
@@ -87,9 +87,13 @@ func (s *Server) setRoutes() {
 func (s *Server) Run(conf *config.Config) {
 
 	server := http.Server{
-		Addr:      conf.ServiceBindHost + ":" + strconv.Itoa(conf.ServicePort),
-		Handler:   s.Router,
-		TLSConfig: s.TLSConfig,
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      15 * time.Second,
+		IdleTimeout:       60 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second,
+		Addr:              conf.ServiceBindHost + ":" + strconv.Itoa(conf.ServicePort),
+		Handler:           s.Router,
+		TLSConfig:         s.TLSConfig,
 	}
 
 	if err := server.ListenAndServeTLS("", ""); err != nil {
@@ -102,14 +106,14 @@ type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r
 
 func (s *Server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
 
-	return authentication.IsEntitled(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
+	return servertools.IsEntitled(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
 		handler(s.Config, w, r)
 	})
 }
 
 func (s *Server) handleAdminRequest(requestHandler RequestHandlerFunction) http.HandlerFunc {
 
-	return authentication.IsEntitled(s.Config.AdminKeys, func(w http.ResponseWriter, r *http.Request) {
+	return servertools.IsEntitled(s.Config.AdminKeys, func(w http.ResponseWriter, r *http.Request) {
 		requestHandler(s.Config, w, r)
 	})
 }

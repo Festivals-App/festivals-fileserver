@@ -1,13 +1,15 @@
 package handler
 
 import (
-	"github.com/Festivals-App/festivals-fileserver/server/config"
-	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
-	"github.com/go-chi/chi/v5"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/Festivals-App/festivals-fileserver/server/config"
+	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
+	servertools "github.com/Festivals-App/festivals-server-tools"
+	"github.com/go-chi/chi/v5"
 )
 
 var kMaxFileSize int64 = 10 << 20
@@ -22,7 +24,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxFileSize)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `myFile`
@@ -30,7 +32,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// the Header and the size of the file
 	file, _, err := r.FormFile("image")
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
@@ -38,7 +40,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// create intermidiate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -46,7 +48,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// a particular naming pattern
 	tempFile, err := ioutil.TempFile(conf.StorageURL, "upload-*.jpg")
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer tempFile.Close()
@@ -55,19 +57,19 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// write this byte array to our temporary file
 	_, err = tempFile.Write(fileBytes)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// return that we have successfully uploaded our file!
 	path := tempFile.Name()
 	_, fileName := filepath.Split(path)
-	respondJSON(w, 201, fileName)
+	servertools.RespondJSON(w, 201, fileName)
 }
 
 func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
@@ -77,7 +79,7 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	imagepath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(imagepath) {
-		respondError(w, http.StatusBadRequest, "File does not exist.")
+		servertools.RespondError(w, http.StatusBadRequest, "File does not exist.")
 		return
 	}
 	// get query values if the exist
@@ -87,7 +89,7 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 		img, err := os.Open(imagepath)
 		// we assume the image does not exist
 		if err != nil {
-			respondError(w, http.StatusBadRequest, err.Error())
+			servertools.RespondError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
@@ -97,7 +99,7 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 
 	resizedImage, err := manipulate.ResizeIfNeeded(conf, objectID, values)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -111,7 +113,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create path to original file and check if it exists
 	imagepath := filepath.Join(conf.StorageURL, objectID)
 	if !manipulate.FileExists(imagepath) {
-		respondError(w, http.StatusBadRequest, "File does not exist.")
+		servertools.RespondError(w, http.StatusBadRequest, "File does not exist.")
 		return
 	}
 	// limit the request to kMaxFileSize
@@ -120,7 +122,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// upload of 10 MB files.
 	err := r.ParseMultipartForm(kMaxFileSize)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	// FormFile returns the first file for the given key `myFile`
@@ -128,7 +130,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// the Header and the size of the file
 	file, _, err := r.FormFile("image")
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
@@ -136,7 +138,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// create intermediate dirs if needed
 	err = os.MkdirAll(conf.StorageURL, os.ModePerm)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -144,7 +146,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// byte array
 	fileBytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -152,7 +154,7 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	// a particular naming pattern
 	err = ioutil.WriteFile(imagepath, fileBytes, os.ModePerm)
 	if err != nil {
-		respondError(w, http.StatusBadRequest, err.Error())
+		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer file.Close()
@@ -161,16 +163,16 @@ func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	searchPatern := conf.ResizeStorageURL + "/" + "*_" + objectID
 	files, err := filepath.Glob(searchPatern)
 	if err != nil {
-		respondError(w, http.StatusInternalServerError, err.Error())
+		servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 	for _, f := range files {
 		if err := os.Remove(f); err != nil {
-			respondError(w, http.StatusInternalServerError, err.Error())
+			servertools.RespondError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 	}
 
 	// return that we have successfully uploaded our file!
-	respondJSON(w, 201, objectID)
+	servertools.RespondJSON(w, 201, objectID)
 }
