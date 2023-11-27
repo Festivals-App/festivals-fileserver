@@ -71,13 +71,11 @@ sleep 1
 
 ## Prepare log directory
 mkdir /var/log/festivals-fileserver || { echo "Failed to create log directory. Exiting." ; exit 1; }
-chown "$WEB_USER":"$WEB_USER" /var/log/festivals-fileserver
 echo "Create log directory at '/var/log/festivals-fileserver'."
 
 ## Prepare file directories
 mkdir -p /srv/festivals-fileserver/images/resized >/dev/null || { echo "Failed to create the image directories. Exiting." ; exit 1; }
 mkdir -p /srv/festivals-fileserver/pdf >/dev/null || { echo "Failed to create the pdf directories. Exiting." ; exit 1; }
-chown -R "$WEB_USER":"$WEB_USER" /srv/festivals-fileserver
 echo "Created folders to hold uploaded files at '/srv/festivals-fileserver'."
 sleep 1
 
@@ -126,6 +124,15 @@ elif ! [ "$(uname -s)" = "Darwin" ]; then
   echo "Systemd is missing and not on macOS. Exiting."
   exit 1
 fi
+
+## Set appropriate permissions
+#
+chown -R "$WEB_USER":"$WEB_USER" /usr/local/festivals-fileserver
+chown -R "$WEB_USER":"$WEB_USER" /var/log/festivals-fileserver
+chown -R "$WEB_USER":"$WEB_USER" /srv/festivals-fileserver
+chown "$WEB_USER":"$WEB_USER" /etc/festivals-identity-server.conf
+echo "Seting appropriate permissions..."
+sleep 1
 
 # Removing unused files
 #
