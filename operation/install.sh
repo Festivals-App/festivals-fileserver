@@ -130,7 +130,7 @@ fi
 chown -R "$WEB_USER":"$WEB_USER" /usr/local/festivals-fileserver
 chown -R "$WEB_USER":"$WEB_USER" /var/log/festivals-fileserver
 chown -R "$WEB_USER":"$WEB_USER" /srv/festivals-fileserver
-chown "$WEB_USER":"$WEB_USER" /etc/festivals-identity-server.conf
+chown "$WEB_USER":"$WEB_USER" /etc/festivals-fileserver.conf
 echo "Seting appropriate permissions..."
 sleep 1
 
