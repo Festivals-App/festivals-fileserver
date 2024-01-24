@@ -24,7 +24,7 @@ exposes file storage and file manipulation functions to be used for all file ass
 <hr />
 
 ## Development
-The developement of the FestivalsFilesAPI [(see documentation)](./DOCUMENTATION.md) and the festivals-fileserver is quite forward and does *not* dependend on the [festivals-api-ios](https://github.com/Festivals-App/festivals-api-ios) client library directly. To test whether the festivals-fileserver is working correctly i'm currently relying on downstream tests of the festivals-api-ios.
+The developement of the FestivalsFilesAPI [(see documentation)](./DOCUMENTATION.md) and the festivals-fileserver is quite forward and does *not* dependend on the [festivals-api-ios](https://github.com/Festivals-App/festivals-api-ios) client library directly.
 
 To find out more about the architecture and technical information see the [ARCHITECTURE](./ARCHITECTURE.md) document. The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
