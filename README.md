@@ -37,7 +37,7 @@ To find out more about the architecture and technical information see the [ARCHI
 The festivals-fileserver expects either a config file at `/etc/festivals-fileserver.conf` or the template config file present in the directory it runs from, 
 it also expects the root certificate and the server certificate and key to establish secure inter-service communication as well as the client-service communication.
 
-### VM
+#### VM
 The install, update and uninstall scripts should work with any system that uses *systemd* and *firewalld*.
 Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
 
