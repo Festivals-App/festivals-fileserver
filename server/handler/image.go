@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -27,7 +28,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
 	}
-	// FormFile returns the first file for the given key `myFile`
+	// FormFile returns the first file for the given key `image`
 	// it also returns the FileHeader so we can get the Filename,
 	// the Header and the size of the file
 	file, _, err := r.FormFile("image")
@@ -46,7 +47,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
-	tempFile, err := ioutil.TempFile(conf.StorageURL, "upload-*.jpg")
+	tempFile, err := os.CreateTemp(conf.StorageURL, "upload-*.jpg")
 	if err != nil {
 		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
@@ -55,7 +56,7 @@ func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request
 
 	// read all of the contents of our uploaded file into a
 	// byte array
-	fileBytes, err := ioutil.ReadAll(file)
+	fileBytes, err := io.ReadAll(file)
 	if err != nil {
 		servertools.RespondError(w, http.StatusBadRequest, err.Error())
 		return
