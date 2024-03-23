@@ -8,7 +8,9 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/status"
+	token "github.com/Festivals-App/festivals-identity-server/jwt"
 	servertools "github.com/Festivals-App/festivals-server-tools"
+	"github.com/rs/zerolog/log"
 )
 
 type ServerStatus struct {
@@ -26,7 +28,13 @@ type ServerFiles struct {
 	PDFs   []string `json:"pdfs"`
 }
 
-func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
+func GetStorageStatus(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, _ *http.Request) {
+
+	if claims.UserRole != token.ADMIN {
+		log.Error().Msg("User is not authorized to get storage status.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// fetch all original images
 	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
@@ -70,7 +78,13 @@ func Status(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	servertools.RespondJSON(w, 200, status)
 }
 
-func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
+func GetFileList(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, _ *http.Request) {
+
+	if claims.UserRole != token.ADMIN {
+		log.Error().Msg("User is not authorized to get files list.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// fetch all original images
 	imageSearchPattern := conf.StorageURL + "/" + "upload-*"
@@ -106,18 +120,15 @@ func Files(conf *config.Config, w http.ResponseWriter, _ *http.Request) {
 	})
 }
 
-func GetVersion(conf *config.Config, w http.ResponseWriter, r *http.Request) {
-
+func GetVersion(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	servertools.RespondString(w, http.StatusOK, status.VersionString())
 }
 
-func GetInfo(conf *config.Config, w http.ResponseWriter, r *http.Request) {
-
+func GetInfo(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	servertools.RespondJSON(w, http.StatusOK, status.InfoString())
 }
 
-func GetHealth(conf *config.Config, w http.ResponseWriter, r *http.Request) {
-
+func GetHealth(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	servertools.RespondCode(w, status.HealthStatus())
 }
 

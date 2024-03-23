@@ -8,15 +8,23 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
+	token "github.com/Festivals-App/festivals-identity-server/jwt"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
+	"github.com/rs/zerolog/log"
 )
 
 var kMaxPDFSize int64 = 10 << 20
 
 // GET functions
 
-func MultipartPDFUpload(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func MultipartPDFUpload(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	if claims.UserRole != token.ADMIN && claims.UserRole != token.CREATOR {
+		log.Error().Msg("User is not authorized to upload pdfs.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// limit the request to kMaxPDFSize
 	r.Body = http.MaxBytesReader(w, r.Body, kMaxPDFSize+512)
@@ -93,7 +101,13 @@ func DownloadPDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	respondFile(w, pdf)
 }
 
-func UpdatePDF(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func UpdatePDF(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	if claims.UserRole != token.ADMIN && claims.UserRole != token.CREATOR {
+		log.Error().Msg("User is not authorized to update pdfs.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// get image file name
 	objectID := chi.URLParam(r, "pdfIdentifier")

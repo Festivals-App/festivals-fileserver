@@ -3,11 +3,13 @@ package server
 import (
 	"crypto/tls"
 	"net/http"
+	"slices"
 	"strconv"
 	"time"
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/handler"
+	token "github.com/Festivals-App/festivals-identity-server/jwt"
 	festivalspki "github.com/Festivals-App/festivals-pki"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
@@ -20,16 +22,17 @@ type Server struct {
 	Router    *chi.Mux
 	Config    *config.Config
 	TLSConfig *tls.Config
+	Validator *token.ValidationService
 }
 
 func NewServer(config *config.Config) *Server {
 	server := &Server{}
-	server.Initialize(config)
+	server.initialize(config)
 	return server
 }
 
 // Initialize the server with predefined configuration
-func (s *Server) Initialize(config *config.Config) {
+func (s *Server) initialize(config *config.Config) {
 
 	s.Router = chi.NewRouter()
 	s.Config = config
@@ -37,6 +40,17 @@ func (s *Server) Initialize(config *config.Config) {
 	s.setTLSHandling()
 	s.setMiddleware()
 	s.setRoutes()
+}
+
+func (s *Server) setIdentityService() {
+
+	config := s.Config
+
+	val := token.NewValidationService(config.IdentityEndpoint, config.TLSCert, config.TLSKey, config.ServiceKey, false)
+	if val == nil {
+		log.Fatal().Msg("Failed to create validator.")
+	}
+	s.Validator = val
 }
 
 func (s *Server) setTLSHandling() {
@@ -61,27 +75,27 @@ func (s *Server) setMiddleware() {
 // setRouters sets the all required routers
 func (s *Server) setRoutes() {
 
-	s.Router.Get("/version", s.handleRequestWithoutAuthentication(handler.GetVersion))
-	s.Router.Get("/info", s.handleRequestWithoutAuthentication(handler.GetInfo))
-	s.Router.Get("/health", s.handleRequestWithoutAuthentication(handler.GetHealth))
+	s.Router.Get("/version", s.handleRequest(handler.GetVersion))
+	s.Router.Get("/info", s.handleRequest(handler.GetInfo))
+	s.Router.Get("/health", s.handleRequest(handler.GetHealth))
 
-	s.Router.Post("/update", s.handleAdminRequest(handler.MakeUpdate))
-	s.Router.Get("/log", s.handleAdminRequest(handler.GetLog))
-	s.Router.Get("/log/trace", s.handleAdminRequest(handler.GetTraceLog))
-	s.Router.Get("/status", s.handleAdminRequest(handler.Status))
-	s.Router.Get("/files", s.handleAdminRequest(handler.Files))
+	s.Router.Post("/update", s.handleRequest(handler.MakeUpdate))
+	s.Router.Get("/log", s.handleRequest(handler.GetLog))
+	s.Router.Get("/log/trace", s.handleRequest(handler.GetTraceLog))
+	s.Router.Get("/status", s.handleRequest(handler.GetStorageStatus))
+	s.Router.Get("/files", s.handleRequest(handler.GetFileList))
 
 	// GET requests
-	s.Router.Get("/images/{imageIdentifier}", s.handleRequest(handler.Download))
-	s.Router.Get("/pdf/{pdfIdentifier}", s.handleRequest(handler.DownloadPDF))
+	s.Router.Get("/images/{imageIdentifier}", s.handleAPIRequest(handler.Download))
+	s.Router.Get("/pdf/{pdfIdentifier}", s.handleAPIRequest(handler.DownloadPDF))
 
 	// POST requests
-	s.Router.Post("/images/upload", s.handleAdminRequest(handler.MultipartUpload))
-	s.Router.Post("/pdf/upload", s.handleAdminRequest(handler.MultipartPDFUpload))
+	s.Router.Post("/images/upload", s.handleRequest(handler.MultipartUpload))
+	s.Router.Post("/pdf/upload", s.handleRequest(handler.MultipartPDFUpload))
 
 	// PATCH
-	s.Router.Patch("/images/{imageIdentifier}", s.handleAdminRequest(handler.Update))
-	s.Router.Patch("/pdf/{pdfIdentifier}", s.handleAdminRequest(handler.UpdatePDF))
+	s.Router.Patch("/images/{imageIdentifier}", s.handleRequest(handler.Update))
+	s.Router.Patch("/pdf/{pdfIdentifier}", s.handleRequest(handler.UpdatePDF))
 }
 
 func (s *Server) Run(conf *config.Config) {
@@ -101,27 +115,35 @@ func (s *Server) Run(conf *config.Config) {
 	}
 }
 
-// function prototype to inject config instance in handleRequest()
-type RequestHandlerFunction func(config *config.Config, w http.ResponseWriter, r *http.Request)
+type APIKeyAuthenticatedHandlerFunction func(conf *config.Config, w http.ResponseWriter, r *http.Request)
 
-func (s *Server) handleRequest(handler RequestHandlerFunction) http.HandlerFunc {
-
-	return servertools.IsEntitled(s.Config.APIKeys, func(w http.ResponseWriter, r *http.Request) {
-		handler(s.Config, w, r)
-	})
-}
-
-func (s *Server) handleAdminRequest(requestHandler RequestHandlerFunction) http.HandlerFunc {
-
-	return servertools.IsEntitled(s.Config.AdminKeys, func(w http.ResponseWriter, r *http.Request) {
-		requestHandler(s.Config, w, r)
-	})
-}
-
-// inject Config in handler functions
-func (s *Server) handleRequestWithoutAuthentication(requestHandler RequestHandlerFunction) http.HandlerFunc {
+func (s *Server) handleAPIRequest(requestHandler APIKeyAuthenticatedHandlerFunction) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		apikey := token.GetAPIToken(r)
+		if !slices.Contains((*s.Validator.APIKeys), apikey) {
+			claims := token.GetValidClaims(r, s.Validator)
+			if claims == nil {
+				servertools.UnauthorizedResponse(w)
+				return
+			}
+		}
 		requestHandler(s.Config, w, r)
+	})
+}
+
+type JWTAuthenticatedHandlerFunction func(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request)
+
+func (s *Server) handleRequest(requestHandler JWTAuthenticatedHandlerFunction) http.HandlerFunc {
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		claims := token.GetValidClaims(r, s.Validator)
+		if claims == nil {
+			servertools.UnauthorizedResponse(w)
+			return
+		}
+		requestHandler(s.Validator, claims, s.Config, w, r)
 	})
 }

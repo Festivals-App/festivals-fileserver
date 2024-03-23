@@ -74,6 +74,8 @@ Upload an image.
 
 Get the image with the given `objectID`.
 
+* Authorization: API Key
+
 * Query Parameter:  
     `height`, `width`: Crops the image to the given size, respecting the aspect ratio of the image.
 

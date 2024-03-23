@@ -9,15 +9,23 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/manipulate"
+	token "github.com/Festivals-App/festivals-identity-server/jwt"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/go-chi/chi/v5"
+	"github.com/rs/zerolog/log"
 )
 
 var kMaxFileSize int64 = 10 << 20
 
 // GET functions
 
-func MultipartUpload(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func MultipartUpload(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	if claims.UserRole != token.ADMIN && claims.UserRole != token.CREATOR {
+		log.Error().Msg("User is not authorized to upload images.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// limit the request to kMaxFileSize
 	r.Body = http.MaxBytesReader(w, r.Body, kMaxFileSize+512)
@@ -107,7 +115,13 @@ func Download(conf *config.Config, w http.ResponseWriter, r *http.Request) {
 	respondFile(w, resizedImage)
 }
 
-func Update(conf *config.Config, w http.ResponseWriter, r *http.Request) {
+func Update(validator *token.ValidationService, claims *token.UserClaims, conf *config.Config, w http.ResponseWriter, r *http.Request) {
+
+	if claims.UserRole != token.ADMIN && claims.UserRole != token.CREATOR {
+		log.Error().Msg("User is not authorized to update images.")
+		servertools.UnauthorizedResponse(w)
+		return
+	}
 
 	// get image file name
 	objectID := chi.URLParam(r, "imageIdentifier")
