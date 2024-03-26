@@ -37,6 +37,7 @@ func (s *Server) initialize(config *config.Config) {
 	s.Router = chi.NewRouter()
 	s.Config = config
 
+	s.setIdentityService()
 	s.setTLSHandling()
 	s.setMiddleware()
 	s.setRoutes()
