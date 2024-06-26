@@ -25,6 +25,6 @@ require (
 
 require (
 	github.com/rs/zerolog v1.32.0
-	golang.org/x/image v0.15.0 // indirect
+	golang.org/x/image v0.18.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 )
