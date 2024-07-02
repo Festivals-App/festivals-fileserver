@@ -9,7 +9,7 @@ require (
 	github.com/Festivals-App/festivals-pki v0.0.4
 	github.com/Festivals-App/festivals-server-tools v0.0.4
 	github.com/disintegration/imaging v1.6.2
-	github.com/go-chi/chi/v5 v5.0.14
+	github.com/go-chi/chi/v5 v5.1.0
 	github.com/pelletier/go-toml v1.9.5
 )
 
