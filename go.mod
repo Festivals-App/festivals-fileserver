@@ -1,8 +1,6 @@
 module github.com/Festivals-App/festivals-fileserver
 
-go 1.21.5
-
-toolchain go1.21.6
+go 1.23.0
 
 require (
 	github.com/Festivals-App/festivals-identity-server v0.7.8
@@ -20,11 +18,11 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 )
 
 require (
 	github.com/rs/zerolog v1.33.0
-	golang.org/x/image v0.18.0 // indirect
+	golang.org/x/image v0.20.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 )
