@@ -13,7 +13,7 @@
 A lightweight service providing a RESTful API called **FestivalsFilesAPI**. The FestivalsFilesAPI
 exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
 
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/overview_files.png "Figure 1: Architecture Overview Highlighted")
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/architecture_overview_file_server.svg "Figure 1: Architecture Overview Highlighted")
 
 <hr />
 <p align="center">
