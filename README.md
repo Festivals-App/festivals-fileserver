@@ -6,7 +6,7 @@
 
 <h1 align="center">
     <br/><br/>
-    Festivals App File Server
+    FestivalsApp File Server
     <br/><br/>
 </h1>
 
