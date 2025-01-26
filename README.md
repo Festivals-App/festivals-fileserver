@@ -21,7 +21,7 @@ exposes file storage and file manipulation functions to be used for all file ass
   <a href="#deployment">Deployment</a> •
   <a href="#engage">Engage</a>
 </p>
-<hr />
+<hr/>
 
 ## Development
 
@@ -29,8 +29,10 @@ The developement of the FestivalsFilesAPI [(see documentation)](./DOCUMENTATION.
 
 To find out more about the architecture and technical information see the [ARCHITECTURE](./ARCHITECTURE.md) document. The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
-- [Golang](https://go.dev/) Version 1.21.5+
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.85.2+
+### Requirements
+
+- [Golang](https://go.dev/) Version 1.23.5+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.96.0+
   - Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
 
@@ -89,4 +91,4 @@ The following channels are available for discussions, feedback, and support requ
 
 ### Licensing
 
-Copyright (c) 2017-2024 Simon Gaus. Licensed under the [**GNU Lesser General Public License v3.0**](./LICENSE)
+Copyright (c) 2017-2025 Simon Gaus. Licensed under the [**GNU Lesser General Public License v3.0**](./LICENSE)
