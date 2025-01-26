@@ -1,0 +1,4 @@
+[festivals-fileserver]
+title=festivals-fileserver
+description=Exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
+ports=1910/tcp

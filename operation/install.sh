@@ -97,7 +97,8 @@ fi
 # 
 if command -v ufw > /dev/null; then
 
-  ufw allow 1910/tcp >/dev/null
+  mv ufw_app_profile /etc/ufw/applications.d/festivals-fileserver
+  ufw allow festivals-fileserver >/dev/null
   echo "Added festivals-fileserver to ufw using port 1910."
   sleep 1
 
