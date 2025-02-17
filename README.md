@@ -13,7 +13,7 @@
 A lightweight service providing a RESTful API called **FestivalsFilesAPI**. The FestivalsFilesAPI
 exposes file storage and file manipulation functions to be used for all file assets needed by the FestivalsApp.
 
-![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/architecture_overview_file_server.svg "Figure 1: Architecture Overview Highlighted")
+![Figure 1: Architecture Overview Highlighted](https://github.com/Festivals-App/festivals-documentation/blob/main/images/architecture/export/architecture_overview_file_server.svg "Figure 1: Architecture Overview Highlighted")
 
 <hr />
 <p align="center">
@@ -39,13 +39,14 @@ To find out more about the architecture and technical information see the [ARCHI
 ## Deployment
 
 The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-fileserver binary.
-The config file needs to be placed at `/etc/festivals-fileserver.conf` or the template config file needs to be present in the directory the binary runs in.
 
-You also need to provide certificates in the right format and location:
+  > The config file is placed at `/etc/festivals-fileserver.conf`.
 
-- The default path to the root CA certificate is          `/usr/local/festivals-fileserver/ca.crt`
-- The default path to the server certificate is           `/usr/local/festivals-fileserver/server.crt`
-- The default path to the corresponding key is            `/usr/local/festivals-fileserver/server.key`
+You must ensure that the certificates for the fileserver are in the correct format and placed in the appropriate location:
+
+  > Root CA certificate   `/usr/local/festivals-fileserver/ca.crt`  
+  > Server certificate    `/usr/local/festivals-fileserver/server.crt`  
+  > Server key            `/usr/local/festivals-fileserver/server.key`  
 
 Where the root CA certificate is required to validate incoming requests and the server certificate and key is required to make outgoing connections.
 For instructions on how to manage and create the certificates see the [festivals-pki](https://github.com/Festivals-App/festivals-pki) repository.
@@ -87,7 +88,7 @@ The following channels are available for discussions, feedback, and support requ
 | Type                     | Channel                                                |
 | ------------------------ | ------------------------------------------------------ |
 | **General Discussion**   | <a href="https://github.com/festivals-app/festivals-documentation/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/festivals-app/festivals-documentation/question.svg?style=flat-square"></a> </a>   |
-| **Other Requests**    | <a href="mailto:simon.cay.gaus@gmail.com" title="Email me"><img src="https://img.shields.io/badge/email-Simon-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
+| **Other Requests**    | <a href="mailto:simon@festivalsapp.org" title="Email me"><img src="https://img.shields.io/badge/email-Simon-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
 ### Licensing
 
