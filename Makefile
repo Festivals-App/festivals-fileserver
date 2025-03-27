@@ -3,6 +3,7 @@
 VERSION=development
 DATE=$(shell date +"%d-%m-%Y-%H-%M")
 REF=refs/tags/development
+DEV_PATH_MAC=$(shell echo ~/Library/Containers/org.festivalsapp.project)
 export
 
 build:
