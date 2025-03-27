@@ -46,7 +46,7 @@ func ParseConfig(cfgFile string) *Config {
 
 	content, err := toml.LoadFile(cfgFile)
 	if err != nil {
-		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
+		log.Fatal().Err(err).Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
 	serviceBindHost := content.Get("service.bind-host").(string)
