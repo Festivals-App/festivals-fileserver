@@ -4,7 +4,7 @@
 [service]
 bind-host = "localhost"
 port = 1910
-key = "TEST_API_KEY_001"
+key = "TEST_SERVICE_KEY_001"
 storage-url = "/srv/festivals-fileserver/images"
 resized-storage-url = "/srv/festivals-fileserver/images/resized"
 
