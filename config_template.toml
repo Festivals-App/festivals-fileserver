@@ -2,7 +2,6 @@
 # TOML 1.0.0-rc.2+
 
 [service]
-bind-address = "localhost"
 bind-host = "localhost"
 port = 1910
 key = "TEST_API_KEY_001"
@@ -20,3 +19,7 @@ interval = 6
 
 [authentication]
 endpoint = "localhost"
+
+[log]
+info = "/var/log/festivals-fileserver/info.log"
+trace = "/var/log/festivals-fileserver/trace.log"

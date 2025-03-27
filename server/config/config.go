@@ -9,18 +9,17 @@ import (
 )
 
 type Config struct {
-	ServiceBindAddress string
-	ServiceBindHost    string
-	ServicePort        int
-	ServiceKey         string
-	TLSRootCert        string
-	TLSCert            string
-	TLSKey             string
-	LoversEar          string
-	Interval           int
-	IdentityEndpoint   string
-	StorageURL         string
-	ResizeStorageURL   string
+	ServiceBindHost  string
+	ServicePort      int
+	ServiceKey       string
+	TLSRootCert      string
+	TLSCert          string
+	TLSKey           string
+	LoversEar        string
+	Interval         int
+	IdentityEndpoint string
+	StorageURL       string
+	ResizeStorageURL string
 }
 
 func DefaultConfig() *Config {
@@ -50,7 +49,6 @@ func ParseConfig(cfgFile string) *Config {
 		log.Fatal().Msg("server initialize: could not read config file at '" + cfgFile + "' with error: " + err.Error())
 	}
 
-	serviceBindAdress := content.Get("service.bind-address").(string)
 	serviceBindHost := content.Get("service.bind-host").(string)
 	serverPort := content.Get("service.port").(int64)
 	serviceKey := content.Get("service.key").(string)
@@ -68,17 +66,16 @@ func ParseConfig(cfgFile string) *Config {
 	servicResizedStorageURL := content.Get("service.resized-storage-url").(string)
 
 	return &Config{
-		ServiceBindAddress: serviceBindAdress,
-		ServiceBindHost:    serviceBindHost,
-		ServicePort:        int(serverPort),
-		ServiceKey:         serviceKey,
-		TLSRootCert:        tlsrootcert,
-		TLSCert:            tlscert,
-		TLSKey:             tlskey,
-		LoversEar:          loversear,
-		Interval:           int(interval),
-		IdentityEndpoint:   identity,
-		StorageURL:         storageURL,
-		ResizeStorageURL:   servicResizedStorageURL,
+		ServiceBindHost:  serviceBindHost,
+		ServicePort:      int(serverPort),
+		ServiceKey:       serviceKey,
+		TLSRootCert:      tlsrootcert,
+		TLSCert:          tlscert,
+		TLSKey:           tlskey,
+		LoversEar:        loversear,
+		Interval:         int(interval),
+		IdentityEndpoint: identity,
+		StorageURL:       storageURL,
+		ResizeStorageURL: servicResizedStorageURL,
 	}
 }
