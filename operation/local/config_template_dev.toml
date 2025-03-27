@@ -1,0 +1,25 @@
+# festivals-fileserver configuration file v1.0
+# TOML 1.0.0-rc.2+
+
+[service]
+bind-host = "files.festivalsapp.dev"
+port = 1910
+key = "TEST_SERVICE_KEY_001"
+storage-url = "~/Library/Containers/org.festivalsapp.project/srv/festivals-fileserver/images"
+resized-storage-url = "~/Library/Containers/org.festivalsapp.project/srv/festivals-fileserver/images/resized"
+
+[tls]
+festivaslapp-root-ca = "~/Library/Containers/org.festivalsapp.project/usr/local/festivals-fileserver/ca.crt"
+cert = "~/Library/Containers/org.festivalsapp.project/usr/local/festivals-fileserver/server.crt"
+key = "~/Library/Containers/org.festivalsapp.project/usr/local/festivals-fileserver/server.key"
+
+[heartbeat]
+endpoint = "https://discovery.festivalsapp.dev:8443/loversear"
+interval = 6
+
+[authentication]
+endpoint = "https://identity.festivalsapp.dev:22580"
+
+[log]
+info = "~/Library/Containers/org.festivalsapp.project/var/log/festivals-fileserver/info.log"
+trace = "~/Library/Containers/org.festivalsapp.project/var/log/festivals-fileserver/trace.log"
