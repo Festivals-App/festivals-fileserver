@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"time"
 
 	"github.com/Festivals-App/festivals-fileserver/server"
@@ -12,21 +11,23 @@ import (
 
 func main() {
 
-	servertools.InitializeGlobalLogger("/var/log/festivals-fileserver/info.log", true)
-	log.Info().Msg("Server startup.")
+	log.Info().Msg("Server startup")
 
-	conf := config.DefaultConfig()
-	if len(os.Args) > 1 {
-		conf = config.ParseConfig(os.Args[1])
-	}
-	log.Info().Msg("Server configuration was initialized.")
+	root := servertools.ContainerPathArgument()
+	configFilePath := root + "/etc/festivals-fileserver.conf"
+
+	conf := config.ParseConfig(configFilePath)
+	log.Info().Msg("Server configuration was initialized")
+
+	servertools.InitializeGlobalLogger(conf.InfoLog, true)
+	log.Info().Msg("Logger initialized")
 
 	server := server.NewServer(conf)
 	go server.Run(conf)
-	log.Info().Msg("Server did start.")
+	log.Info().Msg("Server did start")
 
 	go sendHeartbeat(conf)
-	log.Info().Msg("Heartbeat routine was started.")
+	log.Info().Msg("Heartbeat routine was started")
 
 	// wait forever
 	// https://stackoverflow.com/questions/36419054/go-projects-main-goroutine-sleep-forever

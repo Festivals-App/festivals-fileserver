@@ -67,7 +67,7 @@ func (s *Server) setMiddleware() {
 	// tell the ruter which middleware to use
 	s.Router.Use(
 		// used to log the request to the log files
-		servertools.Middleware(servertools.TraceLogger("/var/log/festivals-fileserver/trace.log")),
+		servertools.Middleware(servertools.TraceLogger(s.Config.TraceLog)),
 		// tries to recover after panics
 		middleware.Recoverer,
 	)
