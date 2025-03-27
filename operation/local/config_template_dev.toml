@@ -2,7 +2,7 @@
 # TOML 1.0.0-rc.2+
 
 [service]
-bind-host = "files.festivalsapp.dev"
+bind-host = "fileserver-0.festivalsapp.dev"
 port = 1910
 key = "TEST_SERVICE_KEY_001"
 storage-url = "~/Library/Containers/org.festivalsapp.project/srv/festivals-fileserver/images"
