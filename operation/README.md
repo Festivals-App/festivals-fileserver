@@ -9,4 +9,4 @@ The `operation` directory contains all configuration templates and scripts to in
 
 ## Deployment
 
-Follow the [**deployment guide**](DEPLOYMENT.md) for deploying the festivals-database inside a virtual machine or the [**local deployment guide**](./local/README.md) for running it on your macOS developer machine.
+Follow the [**deployment guide**](DEPLOYMENT.md) for deploying the festivals-fileserver inside a virtual machine or the [**local deployment guide**](./local/README.md) for running it on your macOS developer machine.
