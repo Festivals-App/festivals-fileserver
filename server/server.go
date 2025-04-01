@@ -47,7 +47,7 @@ func (s *Server) setIdentityService() {
 
 	config := s.Config
 
-	val := token.NewValidationService(config.IdentityEndpoint, config.TLSCert, config.TLSKey, config.ServiceKey, false)
+	val := token.NewValidationService(config.IdentityEndpoint, config.TLSCert, config.TLSKey, config.TLSRootCert, config.ServiceKey, false)
 	if val == nil {
 		log.Fatal().Msg("Failed to create validator.")
 	}
@@ -55,10 +55,9 @@ func (s *Server) setIdentityService() {
 }
 
 func (s *Server) setTLSHandling() {
-
-	tlsConfig := &tls.Config{
-		ClientAuth:     tls.RequireAndVerifyClientCert,
-		GetCertificate: festivalspki.LoadServerCertificateHandler(s.Config.TLSCert, s.Config.TLSKey, s.Config.TLSRootCert),
+	tlsConfig, err := festivalspki.NewServerTLSConfig(s.Config.TLSCert, s.Config.TLSKey, s.Config.TLSRootCert)
+	if err != nil {
+		log.Fatal().Err(err).Msg("failed to set TLS handling")
 	}
 	s.TLSConfig = tlsConfig
 }
