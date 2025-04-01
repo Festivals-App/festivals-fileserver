@@ -27,57 +27,18 @@ exposes file storage and file manipulation functions to be used for all file ass
 
 The developement of the FestivalsFilesAPI [(see documentation)](./DOCUMENTATION.md) and the festivals-fileserver is quite forward and does *not* dependend on the [festivals-api-ios](https://github.com/Festivals-App/festivals-api-ios) client library directly.
 
-To find out more about the architecture and technical information see the [ARCHITECTURE](./ARCHITECTURE.md) document. The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
+The general documentation for the Festivals App is in the [festivals-documentation](https://github.com/festivals-app/festivals-documentation) repository. The documentation repository contains architecture information, general deployment documentation, templates and other helpful documents.
 
 ### Requirements
 
-- [Golang](https://go.dev/) Version 1.23.5+
-- [Visual Studio Code](https://code.visualstudio.com/download) 1.96.0+
+- [Golang](https://go.dev/) Version 1.24.1+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.98.2+
   - Plugin recommendations are managed via [workspace recommendations](https://code.visualstudio.com/docs/editor/extension-marketplace#_recommended-extensions).
 - [Bash script](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) friendly environment
 
 ## Deployment
 
-The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-fileserver binary.
-
-  > The config file is placed at `/etc/festivals-fileserver.conf`.
-
-You must ensure that the certificates for the fileserver are in the correct format and placed in the appropriate location:
-
-  > Root CA certificate   `/usr/local/festivals-fileserver/ca.crt`  
-  > Server certificate    `/usr/local/festivals-fileserver/server.crt`  
-  > Server key            `/usr/local/festivals-fileserver/server.key`  
-
-Where the root CA certificate is required to validate incoming requests and the server certificate and key is required to make outgoing connections.
-For instructions on how to manage and create the certificates see the [festivals-pki](https://github.com/Festivals-App/festivals-pki) repository.
-
-### VM
-
-The install, update and uninstall scripts should work with any system that uses *systemd* and *firewalld*.
-Additionally the scripts will somewhat work under macOS but won't configure the firewall or launch service.
-
-```bash
-#Installing
-curl -o install.sh https://raw.githubusercontent.com/Festivals-App/festivals-fileserver/master/operation/install.sh
-chmod +x install.sh
-sudo ./install.sh
-
-#Updating
-curl -o update.sh https://raw.githubusercontent.com/Festivals-App/festivals-fileserver/master/operation/update.sh
-chmod +x update.sh
-sudo ./update.sh
-
-#To see if the server is running use:
-sudo systemctl status festivals-fileserver
-```
-
-#### Build and run using make
-
-```bash
-make build
-make run
-# Default API Endpoint : https://localhost:1910
-```
+The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-fileserver binary, just follow the deployment guide for  [**deployment guide**](./operation/DEPLOYMENT.md) it inside a virtual machine or the [local deployment guide](./operation/local/README.md) for running it on your macOS developer machine.
 
 ## Engage
 
