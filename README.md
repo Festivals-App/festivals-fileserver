@@ -38,8 +38,8 @@ The general documentation for the Festivals App is in the [festivals-documentati
 
 ## Deployment
 
-The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-fileserver binary, 
-just follow the [**deployment guide**](./operation/DEPLOYMENT.md) for deploying it inside a virtual machine or the [local deployment guide](./operation/local/README.md) 
+The Go binaries are able to run without system dependencies so there are not many requirements for the system to run the festivals-fileserver binary,
+just follow the [**deployment guide**](./operation/DEPLOYMENT.md) for deploying it inside a virtual machine or the [**local deployment guide**](./operation/local/README.md)
 for running it on your macOS developer machine.
 
 ## Engage
