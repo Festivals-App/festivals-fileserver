@@ -62,9 +62,9 @@ Set the correct permissions:
 
 ```bash
 # Change owner to web user
-sudo chown www-data /usr/local/festivals-fileserver/ca.crt
-sudo chown www-data /usr/local/festivals-fileserver/server.crt
-sudo chown www-data /usr/local/festivals-fileserver/server.key
+sudo chown www-data:www-data /usr/local/festivals-fileserver/ca.crt
+sudo chown www-data:www-data /usr/local/festivals-fileserver/server.crt
+sudo chown www-data:www-data /usr/local/festivals-fileserver/server.key
 # Set secure permissions
 sudo chmod 640 /usr/local/festivals-fileserver/ca.crt
 sudo chmod 640 /usr/local/festivals-fileserver/server.crt
