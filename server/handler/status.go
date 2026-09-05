@@ -8,7 +8,7 @@ import (
 
 	"github.com/Festivals-App/festivals-fileserver/server/config"
 	"github.com/Festivals-App/festivals-fileserver/server/status"
-	token "github.com/Festivals-App/festivals-identity-server/jwt"
+	token "github.com/Festivals-App/festivals-identity-server/auth"
 	servertools "github.com/Festivals-App/festivals-server-tools"
 	"github.com/rs/zerolog/log"
 )
