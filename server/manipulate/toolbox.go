@@ -21,29 +21,30 @@ func FileExists(filename string) bool {
 
 func validImageDimensions(width int, height int) bool {
 
-	// wont scale above max dimensions
-	if width > kMaxImageDimension || height > kMaxImageDimension {
-
+	// reject anything wih negative values
+	if width < 0 || height < 0 {
 		return false
 	}
-	// both parameter are provided
-	if width > 0 && height > 0 {
-		if width < kMinImageDimension || height < kMinImageDimension {
-			return false
-		}
-	} else {
 
-		if width == 0 {
-			if height < kMinImageDimension {
-				return false
-			}
-		} else if height == 0 {
-			if width < kMinImageDimension {
-				return false
-			}
-		}
+	// reject anything above max, zero is allowed (means "not specified")
+	if width > kMaxImageDimension || height > kMaxImageDimension {
+		return false
 	}
 
+	// both specified: both must be at least min
+	if width > 0 && height > 0 {
+		return width >= kMinImageDimension && height >= kMinImageDimension
+	}
+
+	// exactly one specified: the specified one must be at least min (we checked for kMaxImageDimension above)
+	if width > 0 {
+		return width >= kMinImageDimension
+	}
+	if height > 0 {
+		return height >= kMinImageDimension
+	}
+
+	// neither specified
 	return true
 }
 
