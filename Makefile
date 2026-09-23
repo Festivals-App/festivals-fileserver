@@ -28,6 +28,9 @@ install:
 run:
 	./festivals-fileserver --container="$(DEV_PATH_MAC)"
 
+test:
+	 go test -v ./server/manipulate
+
 run-env:
 	$(DEV_PATH_MAC)/usr/local/bin/festivals-identity-server --container="$(DEV_PATH_MAC)" &
 	sleep 1
