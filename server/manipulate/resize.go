@@ -3,12 +3,13 @@ package manipulate
 import (
 	"errors"
 	"fmt"
-	"github.com/Festivals-App/festivals-fileserver/server/config"
-	"github.com/disintegration/imaging"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/Festivals-App/festivals-fileserver/server/config"
+	"github.com/boxes-ltd/imaging"
 )
 
 func ResizeIfNeeded(conf *config.Config, objectID string, parameters url.Values) (*os.File, error) {
@@ -59,10 +60,10 @@ func ResizeIfNeeded(conf *config.Config, objectID string, parameters url.Values)
 		return resizedImage, nil
 	}
 
-	return Resize(conf, objectID, width, height)
+	return resize(conf, objectID, width, height)
 }
 
-func Resize(conf *config.Config, objectID string, width int, height int) (*os.File, error) {
+func resize(conf *config.Config, objectID string, width int, height int) (*os.File, error) {
 
 	// get original image
 	originalImagePath := filepath.Join(conf.StorageURL, objectID)
